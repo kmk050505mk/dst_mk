@@ -1,0 +1,1938 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>돈스타브 투게더(DST) 뉴비 생존 백과사전 & 4-투척기 베이스 빌더</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #0c0e12;
+      --bg-card: #151820;
+      --bg-card-hover: #1c212c;
+      --bg-header: #101218;
+      --border-color: #262b37;
+      --border-gold: #c89b3c;
+      --accent-gold: #e5b358;
+      --accent-orange: #ff7043;
+      --accent-green: #66bb6a;
+      --accent-blue: #42a5f5;
+      --accent-purple: #ab47bc;
+      --accent-red: #ef5350;
+      --text-main: #e6e8ec;
+      --text-muted: #9aa0a6;
+      --text-gold: #f4c46d;
+      --font-gothic: 'Cinzel', serif;
+      --font-body: 'Noto Sans KR', sans-serif;
+      --shadow-sm: 0 4px 12px rgba(0,0,0,0.5);
+      --shadow-lg: 0 10px 30px rgba(0,0,0,0.7);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(200, 155, 60, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 10% 40%, rgba(66, 165, 245, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(239, 83, 80, 0.04) 0%, transparent 50%);
+      background-attachment: fixed;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 24px 60px;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(180deg, #151821 0%, #0d0f14 100%);
+      border-bottom: 2px solid var(--border-gold);
+      padding: 22px 0 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .header-content {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-icon {
+      font-size: 36px;
+      filter: drop-shadow(0 0 10px rgba(229, 179, 88, 0.6));
+    }
+
+    .brand-title h1 {
+      font-family: var(--font-gothic);
+      font-size: 22px;
+      letter-spacing: 1.5px;
+      color: var(--accent-gold);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    }
+
+    .brand-title p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .quick-badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge-link {
+      background: rgba(200, 155, 60, 0.15);
+      border: 1px solid var(--border-gold);
+      color: var(--text-gold);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge-link:hover {
+      background: var(--accent-gold);
+      color: #000;
+      transform: translateY(-2px);
+    }
+
+    /* Main Navigation Tabs */
+    .nav-tabs-wrapper {
+      background: #12151c;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 30px;
+      position: sticky;
+      top: 78px;
+      z-index: 90;
+    }
+
+    .nav-tabs {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      overflow-x: auto;
+      padding: 0 24px;
+      scrollbar-width: none;
+    }
+    .nav-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      font-size: 14.5px;
+      font-weight: 700;
+      padding: 15px 20px;
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 3px solid transparent;
+      transition: all 0.25s ease;
+    }
+
+    .nav-tab-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .nav-tab-btn.active {
+      color: var(--accent-gold);
+      border-bottom-color: var(--accent-gold);
+      background: rgba(200, 155, 60, 0.08);
+    }
+
+    /* Tab Sections */
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Section Headers */
+    .section-header {
+      background: linear-gradient(90deg, #181c26 0%, #13151c 100%);
+      border-left: 4px solid var(--accent-gold);
+      border-radius: var(--radius-sm);
+      padding: 18px 24px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .section-header h2 {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    /* Filters & Controls */
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+      align-items: center;
+    }
+
+    .filter-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--accent-gold);
+      color: #000;
+      border-color: var(--accent-gold);
+      font-weight: 700;
+      transform: translateY(-1px);
+    }
+
+    .search-input {
+      background: #101217;
+      border: 1px solid var(--border-color);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      margin-left: auto;
+      width: 240px;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .search-input:focus {
+      border-color: var(--accent-gold);
+    }
+
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+    }
+
+    /* Character Card */
+    .char-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+
+    .char-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-gold);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+    }
+
+    .char-card-header {
+      background: linear-gradient(135deg, #1c222e 0%, #13161f 100%);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    .char-avatar-box {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      border: 2px solid var(--border-gold);
+      background: #0b0d11;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 0 10px rgba(0,0,0,0.8);
+    }
+
+    .char-avatar-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .char-header-info h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .char-title {
+      font-size: 12px;
+      color: var(--accent-gold);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .tier-badge {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-weight: 900;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .tier-Splus { background: linear-gradient(135deg, #ff4081, #d81b60); color: #fff; box-shadow: 0 0 10px rgba(255,64,129,0.5); }
+    .tier-S { background: linear-gradient(135deg, #ffb300, #f57c00); color: #000; font-weight: bold; }
+    .tier-Aplus { background: linear-gradient(135deg, #7c4dff, #512da8); color: #fff; }
+    .tier-A { background: linear-gradient(135deg, #00b0ff, #0277bd); color: #fff; }
+    .tier-Bplus { background: linear-gradient(135deg, #00e676, #00897b); color: #000; }
+    .tier-B { background: linear-gradient(135deg, #66bb6a, #2e7d32); color: #fff; }
+    .tier-C { background: #78909c; color: #fff; }
+    .tier-F { background: #424242; color: #ff5252; border: 1px solid #ff5252; }
+
+    .char-card-body {
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex-grow: 1;
+    }
+
+    .stat-bars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      background: #0f1117;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .stat-value {
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .stat-hp { color: #ef5350; }
+    .stat-hunger { color: #ffa726; }
+    .stat-sanity { color: #ab47bc; }
+
+    .char-diet {
+      font-size: 12px;
+      color: #b0bec5;
+      background: rgba(255,255,255,0.03);
+      padding: 6px 10px;
+      border-radius: 6px;
+      border-left: 3px solid var(--accent-orange);
+    }
+
+    .char-section-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .char-list {
+      list-style: none;
+      font-size: 12.5px;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .char-list li {
+      position: relative;
+      padding-left: 14px;
+    }
+
+    .char-list li::before {
+      content: "•";
+      color: var(--accent-gold);
+      position: absolute;
+      left: 2px;
+      font-weight: bold;
+    }
+
+    .char-weakness li::before {
+      color: var(--accent-red);
+    }
+
+    .char-tip-box {
+      background: rgba(200, 155, 60, 0.08);
+      border: 1px dashed var(--border-gold);
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      color: #ffe082;
+      line-height: 1.4;
+      margin-top: auto;
+    }
+
+    /* Synergy Tier Cards */
+    .synergy-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-bottom: 20px;
+      position: relative;
+      transition: all 0.25s ease;
+    }
+
+    .synergy-card:hover {
+      border-color: var(--border-gold);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .synergy-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .synergy-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .synergy-tier-tag {
+      font-size: 18px;
+      font-weight: 900;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-family: var(--font-gothic);
+    }
+
+    .synergy-avatars {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .synergy-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 2px solid var(--border-gold);
+      background: #111;
+      overflow: hidden;
+    }
+    .synergy-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .synergy-points {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .synergy-point-box {
+      background: #10131a;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      border-left: 3px solid var(--accent-gold);
+    }
+
+    /* Mod Cards */
+    .mod-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .mod-card:hover {
+      border-color: var(--accent-blue);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .mod-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .mod-title h4 {
+      font-size: 16px;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .mod-en {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .mod-tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+    .mod-tag-client { background: rgba(66, 165, 245, 0.2); color: #64b5f6; border: 1px solid #42a5f5; }
+    .mod-tag-server { background: rgba(255, 112, 67, 0.2); color: #ff8a65; border: 1px solid #ff7043; }
+    .mod-tag-both { background: rgba(171, 71, 188, 0.2); color: #ba68c8; border: 1px solid #ab47bc; }
+
+    .mod-desc {
+      font-size: 13px;
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    .mod-tip {
+      background: #0f1218;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #81c784;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mod-hotkey {
+      font-size: 12px;
+      color: var(--text-gold);
+      background: rgba(200, 155, 60, 0.1);
+      padding: 4px 8px;
+      border-radius: 4px;
+      align-self: flex-start;
+      font-weight: 600;
+    }
+
+    /* Roadmap Timeline */
+    .timeline-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .timeline-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      position: relative;
+      border-left: 6px solid var(--accent-gold);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .timeline-card.winter { border-left-color: var(--accent-blue); }
+    .timeline-card.spring { border-left-color: var(--accent-green); }
+    .timeline-card.summer { border-left-color: var(--accent-orange); }
+
+    .timeline-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .days-badge {
+      font-size: 14px;
+      font-weight: 900;
+      background: rgba(255,255,255,0.08);
+      padding: 4px 12px;
+      border-radius: 14px;
+      color: #fff;
+    }
+
+    .todo-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 14px 0;
+    }
+
+    .todo-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13.5px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .todo-item input[type="checkbox"] {
+      margin-top: 4px;
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent-gold);
+      cursor: pointer;
+    }
+
+    .todo-item.checked span {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .craft-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .craft-tag {
+      background: #0f1118;
+      border: 1px solid var(--border-color);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      color: var(--accent-gold);
+    }
+
+    .trap-box {
+      background: rgba(239, 83, 80, 0.1);
+      border-left: 3px solid var(--accent-red);
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #ff8a80;
+      margin-top: 10px;
+    }
+
+    /* Base Planner & Grid Section */
+    .base-planner-container {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 24px;
+    }
+
+    @media (max-width: 1100px) {
+      .base-planner-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .canvas-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .canvas-controls-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      background: #101218;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+    }
+
+    .canvas-btn-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: #1e222d;
+      border: 1px solid var(--border-color);
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background: var(--accent-gold);
+      color: #000;
+      border-color: var(--accent-gold);
+    }
+
+    .btn-gold {
+      background: var(--accent-gold);
+      color: #000;
+      border-color: var(--accent-gold);
+    }
+    .btn-gold:hover {
+      background: #ffd54f;
+    }
+
+    .btn-danger {
+      background: rgba(239, 83, 80, 0.15);
+      color: #ef5350;
+      border-color: #ef5350;
+    }
+    .btn-danger:hover {
+      background: #ef5350;
+      color: #fff;
+    }
+
+    /* Base Canvas Wrapper */
+    .base-canvas-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 2px solid var(--border-gold);
+      box-shadow: 0 0 20px rgba(0,0,0,0.8);
+      user-select: none;
+    }
+
+    .base-bg-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.88;
+      pointer-events: none;
+    }
+
+    #baseInteractiveCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      cursor: crosshair;
+      z-index: 10;
+    }
+
+    /* Overlay Interactive Zones */
+    .quadrant-overlays {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .zone-box {
+      position: relative;
+      border: 1px dashed rgba(255,255,255,0.15);
+      transition: background 0.3s;
+      cursor: pointer;
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .zone-box:hover {
+      background: rgba(200, 155, 60, 0.15);
+    }
+
+    .zone-label-badge {
+      background: rgba(0,0,0,0.8);
+      border: 1px solid var(--accent-gold);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      pointer-events: none;
+    }
+
+    /* Base Sidebar */
+    .base-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .palette-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .palette-item {
+      background: #0f1118;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      font-size: 11px;
+      color: var(--text-main);
+      transition: all 0.2s;
+    }
+
+    .palette-item img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+
+    .palette-item:hover, .palette-item.selected {
+      background: rgba(200, 155, 60, 0.2);
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+      transform: scale(1.05);
+    }
+
+    .resource-calc-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+
+    .resource-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .res-item {
+      background: #0f1118;
+      padding: 6px 10px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+    }
+
+    /* Zone Detail Modal */
+    .zone-info-card {
+      background: #12151e;
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    /* Recipes Cards */
+    .recipe-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      transition: all 0.2s;
+    }
+    .recipe-card:hover {
+      border-color: var(--border-gold);
+      transform: translateY(-2px);
+    }
+
+    .recipe-img-box {
+      width: 60px;
+      height: 60px;
+      background: #0f1117;
+      border: 1px solid var(--border-gold);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .recipe-img-box img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+
+    .recipe-info {
+      flex-grow: 1;
+    }
+    .recipe-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .recipe-formula {
+      font-size: 12.5px;
+      color: var(--accent-gold);
+      background: rgba(200, 155, 60, 0.08);
+      padding: 6px 10px;
+      border-radius: 6px;
+      margin: 6px 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .search-input {
+        width: 100%;
+        margin-left: 0;
+      }
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="brand">
+        <span class="brand-icon">🏕️</span>
+        <div class="brand-title">
+          <h1>DON'T STARVE TOGETHER</h1>
+          <p>뉴비 탈출 종합 가이드 & 4-투척기 클로버 베이스 빌더</p>
+        </div>
+      </div>
+      <div class="quick-badges">
+        <a href="https://www.dstcraft.com/ko" target="_blank" class="badge-link">🌐 dstcraft.com 레시피 계산기</a>
+        <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3792712116" target="_blank" class="badge-link">📦 구독 모드 컬렉션 (48종)</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sticky Nav Tabs -->
+  <div class="nav-tabs-wrapper">
+    <nav class="nav-tabs">
+      <button class="nav-tab-btn active" onclick="switchTab('characters')">👤 1. 캐릭터 도감 & 스킬</button>
+      <button class="nav-tab-btn" onclick="switchTab('synergies')">⚔️ 1-1. 조합 티어 & 시너지</button>
+      <button class="nav-tab-btn" onclick="switchTab('mods')">🧩 2. 구독 모드 48종 해설</button>
+      <button class="nav-tab-btn" onclick="switchTab('roadmap')">📅 3. 사계절 생존 로드맵</button>
+      <button class="nav-tab-btn" onclick="switchTab('base')">🏰 4. 4-투척기 베이스 빌더</button>
+      <button class="nav-tab-btn" onclick="switchTab('recipes')">🍳 5. 필수 요리 & 보스 팁</button>
+    </nav>
+  </div>
+
+  <div class="container">
+
+    <!-- ========================================== -->
+    <!-- TAB 1: 캐릭터 도감 & 스킬 -->
+    <!-- ========================================== -->
+    <section id="tab-characters" class="tab-content active">
+      <div class="section-header">
+        <div>
+          <h2>👤 캐릭터별 특징 & 뉴비 권장도 & 스킬 트리</h2>
+          <p>19명 전체 캐릭터의 스탯, 최신 스킬트리, 고유 장단점, 뉴비 맞춤 실전 팁을 확인하세요.</p>
+        </div>
+        <div class="filter-bar" style="margin-bottom: 0;">
+          <button class="filter-btn active" onclick="filterCharacters('all', this)">전체보기 (19명)</button>
+          <button class="filter-btn" onclick="filterCharacters('top', this)">👑 초보 추천 TOP 4 (S+/S)</button>
+          <button class="filter-btn" onclick="filterCharacters('combat', this)">⚔️ 전투/딜탱</button>
+          <button class="filter-btn" onclick="filterCharacters('gathering', this)">🌾 농경/자원</button>
+          <button class="filter-btn" onclick="filterCharacters('support', this)">🧙 서포트/유틸</button>
+          <input type="text" id="charSearch" class="search-input" placeholder="캐릭터 이름/특징 검색..." oninput="searchCharacters(this.value)">
+        </div>
+      </div>
+
+      <div id="characterCardsGrid" class="cards-grid">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 1-1: 캐릭터 조합 등급표 -->
+    <!-- ========================================== -->
+    <section id="tab-synergies" class="tab-content">
+      <div class="section-header">
+        <div>
+          <h2>⚔️ 캐릭터 조합 등급 & 파티 시너지 가이드</h2>
+          <p>2인 듀오부터 3~4인 보스 레이드까지, 게임을 5배 쉽게 풀어주는 검증된 황금 조합입니다.</p>
+        </div>
+      </div>
+
+      <div id="synergyContainer">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 2: 구독 모드 48종 완벽 해설 -->
+    <!-- ========================================== -->
+    <section id="tab-mods" class="tab-content">
+      <div class="section-header">
+        <div>
+          <h2>🧩 구독 중인 모드 완벽 해설 (48개 컬렉션 전수 분석)</h2>
+          <p>스팀 창작마당 구독 모드의 핵심 기능, 클라이언트/서버 구분, 필수 단축키와 추천 설정법입니다.</p>
+        </div>
+        <div class="filter-bar" style="margin-bottom: 0;">
+          <button class="filter-btn active" onclick="filterMods('all', this)">전체 모드</button>
+          <button class="filter-btn" onclick="filterMods('ui', this)">📊 필수 UI & QoL</button>
+          <button class="filter-btn" onclick="filterMods('korean', this)">🇰🇷 한글화/채팅</button>
+          <button class="filter-btn" onclick="filterMods('gameplay', this)">🌾 농경/창고/편의</button>
+          <button class="filter-btn" onclick="filterMods('survival', this)">🛡️ 생존/알림</button>
+          <input type="text" id="modSearch" class="search-input" placeholder="모드 이름/단축키 검색..." oninput="searchMods(this.value)">
+        </div>
+      </div>
+
+      <div id="modsGrid" class="cards-grid">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 3: 사계절 생존 로드맵 -->
+    <!-- ========================================== -->
+    <section id="tab-roadmap" class="tab-content">
+      <div class="section-header">
+        <div>
+          <h2>📅 사계절 일자별 생존 로드맵 (Day 1 ~ Day 70+)</h2>
+          <p>가을 기초 정착부터 겨울 거인 디어클롭스, 봄 방수 세팅, 여름 폭염 극복까지 일자별 인터랙티브 체크리스트입니다.</p>
+        </div>
+        <div class="filter-bar" style="margin-bottom: 0;">
+          <span id="roadmapProgress" style="font-size: 13px; font-weight: bold; color: var(--accent-gold);">진행률: 0% (0/0)</span>
+          <button class="btn btn-gold" onclick="resetChecklist()" style="padding: 4px 12px; font-size: 12px;">체크리스트 초기화</button>
+        </div>
+      </div>
+
+      <div class="timeline-wrap" id="roadmapTimeline">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 4: 4-투척기 베이스 빌더 -->
+    <!-- ========================================== -->
+    <section id="tab-base" class="tab-content">
+      <div class="section-header">
+        <div>
+          <h2>🏰 4-투척기 클로버 베이스 인터랙티브 빌더 & 레이아웃</h2>
+          <p>사용자 제공 4-플링고 스냅샷 기반의 4사분면 모듈러 베이스 설계도 및 자유 배치 시뮬레이터입니다.</p>
+        </div>
+      </div>
+
+      <div class="base-planner-container">
+        <!-- Canvas Main Panel -->
+        <div class="canvas-panel">
+          <div class="canvas-controls-bar">
+            <div class="canvas-btn-group">
+              <button class="btn btn-gold" id="btnTourMode" onclick="setPlannerMode('tour')">🔍 구역별 가이드 투어</button>
+              <button class="btn" id="btnBuildMode" onclick="setPlannerMode('build')">✏️ 자유 배치 빌더</button>
+              <button class="btn" id="toggleFlingoBtn" onclick="toggleFlingoRadius()">❄️ 투척기 반경 켜기</button>
+            </div>
+            <div class="canvas-btn-group">
+              <button class="btn" onclick="loadRecommendedPreset()">⭐ 추천 배치 불러오기</button>
+              <button class="btn btn-danger" onclick="clearCanvas()">🗑️ 전체 비우기</button>
+              <button class="btn" onclick="exportCanvasImage()">📷 이미지 저장</button>
+            </div>
+          </div>
+
+          <!-- Base Canvas Container -->
+          <div class="base-canvas-wrapper" id="canvasWrapper">
+            <img src="images/base_grid.png" class="base-bg-img" alt="4-Flingo Base Grid">
+            <canvas id="baseInteractiveCanvas" width="900" height="506"></canvas>
+            
+            <!-- Quadrant Highlight Overlays (Tour Mode) -->
+            <div class="quadrant-overlays" id="quadrantOverlays">
+              <div class="zone-box" onclick="selectZone('zone1')" style="grid-column: 1; grid-row: 1;">
+                <span class="zone-label-badge">🍳 1구역: 주방 & 식품 (좌상단)</span>
+              </div>
+              <div class="zone-box" onclick="selectZone('zone2')" style="grid-column: 2; grid-row: 1;">
+                <span class="zone-label-badge">🌾 2구역: 영농 & 온실 (우상단)</span>
+              </div>
+              <div class="zone-box" onclick="selectZone('zone3')" style="grid-column: 1; grid-row: 2;">
+                <span class="zone-label-badge">🔬 3구역: 연구 & 공방/창고 (좌하단)</span>
+              </div>
+              <div class="zone-box" onclick="selectZone('zone4')" style="grid-column: 2; grid-row: 2;">
+                <span class="zone-label-badge">🪵 4구역: 자원 밭 & 건조대 (우하단)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Zone Detail Panel -->
+          <div id="zoneDetailPanel" class="zone-info-card">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Sidebar: Structure Palette & Material Calculator -->
+        <div class="base-sidebar">
+          <!-- Palette -->
+          <div class="palette-card">
+            <h4 style="font-size: 14px; color: var(--accent-gold);">🧱 구조물 팔레트 (선택 후 클릭 배치)</h4>
+            <p style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">클릭하여 선택한 후 좌측 그리드 위에 클릭하여 배치하세요.</p>
+            <div class="palette-grid" id="structurePalette">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+
+          <!-- Material Resource Calculator -->
+          <div class="resource-calc-card">
+            <h4 style="font-size: 14px; color: var(--accent-gold);">🧮 필요 건축 자원 실시간 합산</h4>
+            <p style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">현재 캔버스에 배치된 모든 구조물의 제작 재료입니다.</p>
+            <div class="resource-list" id="resourceCalcList">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 5: 필수 요리 & 보스 팁 -->
+    <!-- ========================================== -->
+    <section id="tab-recipes" class="tab-content">
+      <div class="section-header">
+        <div>
+          <h2>🍳 뉴비 필수 요리 TOP 8 & 계절 보스 요약 (dstcraft 연계)</h2>
+          <p>냄비에 대충 넣어도 절대 실패하지 않는 황금 레시피와 4대 계절 거인 보스전 핵심 카이팅 팁입니다.</p>
+        </div>
+      </div>
+
+      <div class="cards-grid" id="recipesGrid" style="margin-bottom: 30px;">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div class="section-header" style="margin-top: 30px;">
+        <h2>👹 4대 계절 보스 1분 퀵 공략 카드</h2>
+      </div>
+
+      <div class="cards-grid">
+        <div class="synergy-card">
+          <h3 style="color: var(--accent-blue);">❄️ 겨울 거인: 디어클롭스 (Deerclops)</h3>
+          <p style="font-size: 13px; color: var(--text-muted); margin: 6px 0 10px;">체력 4000 | 빙결 광역 공격 | 등장: 30일 밤</p>
+          <ul class="char-list">
+            <li><strong>대처:</strong> 소리가 나면 즉시 베이스 밖 결전 화덕으로 이동 (기지 파괴 방지).</li>
+            <li><strong>카이팅:</strong> 모닥불 2개 겹친 곳 옆에서 2대 치고 빠지거나, 풋볼헬멧+나무갑옷 입고 피에로기 먹으며 맞딜.</li>
+            <li><strong>보상:</strong> '눈알' (봄철 눈알 우산 100% 방수 필수 재료 - 절대 먹지 말 것!).</li>
+          </ul>
+        </div>
+
+        <div class="synergy-card">
+          <h3 style="color: var(--accent-green);">🌧️ 봄 거인: 무스/구스 (Moose/Goose)</h3>
+          <p style="font-size: 13px; color: var(--text-muted); margin: 6px 0 10px;">체력 3000 | 무기 해제 포효 | 새끼 모슬링 5마리</p>
+          <ul class="char-list">
+            <li><strong>대처:</strong> 3번째 공격마다 포효로 손에 든 무기를 떨어뜨리므로 스페이스바로 즉시 줍기.</li>
+            <li><strong>카이팅:</strong> 3대 치고 피하기. 어미 처치 후 번개를 맞고 분노하는 새끼들은 1마리씩 유인하여 각개격파.</li>
+            <li><strong>보상:</strong> '솜털 깃털' (여름 폭염 체온을 0도로 낮추는 깃털 부채 재료).</li>
+          </ul>
+        </div>
+
+        <div class="synergy-card">
+          <h3 style="color: var(--accent-orange);">🍂 가을 2년차 거인: 베어거 (Bearger)</h3>
+          <p style="font-size: 13px; color: var(--text-muted); margin: 6px 0 10px;">체력 6000 | 음식 흡입 & 땅 찍기 충격파</p>
+          <ul class="char-list">
+            <li><strong>활용:</strong> 처치하기보다 깊은 소나무 숲으로 유인하여 돌진으로 나무를 수천 그루 벌목시키는 '벌목 머신'으로 활용!</li>
+            <li><strong>보상:</strong> 두꺼운 털가죽 (겨울 방한 끝판왕 곰가죽 조끼 및 보온 가방 재료).</li>
+          </ul>
+        </div>
+
+        <div class="synergy-card">
+          <h3 style="color: #ff4081;">🔥 사막 레이드 보스: 용파리 (Dragonfly)</h3>
+          <p style="font-size: 13px; color: var(--text-muted); margin: 6px 0 10px;">체력 27500 | 상시 리스폰 | 용암 애벌레 소환</p>
+          <ul class="char-list">
+            <li><strong>공략:</strong> 용암 연못 주변에 돌벽을 지어 애벌레 진입 차단. 팬플룻으로 광폭화 재우기.</li>
+            <li><strong>보상:</strong> 비늘 (불연성 비늘 상자 및 화염 방어구), 녹색/빨간/파란 보석 대량 드랍.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- JavaScript Application Logic -->
+  <script>
+    // Embedded Data
+    const characters = [{"id": "wigfrid", "name_ko": "위그프리드", "name_en": "Wigfrid", "title": "무대 위의 발키리", "tier": "S+", "stars": 1, "role": "combat", "role_name": "전투/탱커", "stats": {"hp": 200, "hunger": 120, "sanity": 120}, "diet": "육식 전용 (고기/생선/달걀만 섭취 가능, 채소/과일 불가)", "strengths": ["적을 타격할 때마다 체력과 정신력이 흡혈 회복됨 (초보 생존력 1위)", "상시 받는 피해 25% 감소 패시브 및 공격력 1.25배 보너스", "가성비 최강 '전투 투구(방어력 80%)' 및 '전투 창' 자체 제작 가능", "전투 찬가(Battle Songs)를 불러 파티원 전원에게 흡혈/방어력/정신력 버프 부여"], "weaknesses": ["오직 '고기' 성분이 들어간 음식만 섭취 가능 (초반 베리/당근 섭취 불가)", "허기 최대치가 120으로 비교적 낮아 자주 식사를 챙겨야 함"], "skill_tree": "최신 스킬트리: 무기 숙련도 강화(엘드리치 샤프 스피어), 전투 찬가 범위/효과 극대화, 비팔로 전투 승마 강화", "newbie_tip": "뉴비에게 가장 추천하는 0순위 캐릭터입니다! 거미나 사냥개를 만났을 때 도망가지 않고 창을 휘두르면 오히려 체력과 정신력이 찹니다. 괴물고기 4개로 미트볼을 만들거나 육포를 주식으로 삼으세요.", "icon": "images/characters/wigfrid.png"}, {"id": "wendy", "name_ko": "웬디", "name_en": "Wendy", "title": "상처 입은 유린자", "tier": "S+", "stars": 1, "role": "combat", "role_name": "광역 사냥/전투", "stats": {"hp": 150, "hunger": 150, "sanity": 200}, "diet": "잡식 (모든 음식 섭취 가능)", "strengths": ["쌍둥이 유령 '아비게일'을 소환하여 거미/벌/개구리 등 다수 잡몹 광역 학살", "어둠 및 몬스터 근접 시 정신력 감소율 25% 완화 (멘탈 관리 최상)", "아비게일 전용 물약(엘릭서)으로 공격력/체력재생/이동속도 대폭 강화", "피펫 파이프를 불어 주변 잃어버린 유령들을 위로하고 애도의 영광 획득"], "weaknesses": ["웬디 본체의 직접 공격력은 0.75배(25% 감소)로 낮음 (단일 보스전은 아비게일 협공 필수)", "아비게일이 강력한 단일 보스에게 피격되면 허무하게 소멸할 수 있음"], "skill_tree": "스킬트리: 아비게일 방어막 생성, 웬디와 아비게일의 영혼 링크 강화, 물약 지속시간 및 효과 증가", "newbie_tip": "초보자의 최대 난관인 거미집 파밍, 개구리비 대처, 벌침 파밍을 100% 날로 먹을 수 있습니다. 밤이 되면 아비게일의 공격력이 40으로 2.6배 강해집니다.", "icon": "images/characters/wendy.png"}, {"id": "wilson", "name_ko": "윌슨", "name_en": "Wilson", "title": "신사 과학자", "tier": "S", "stars": 1, "role": "utility", "role_name": "스탠다드/올라운더", "stats": {"hp": 150, "hunger": 150, "sanity": 200}, "diet": "잡식 (표준)", "strengths": ["아무런 페널티가 없는 가장 균형 잡힌 완벽한 튜토리얼 표준 캐릭터", "시간이 지나면 풍성한 수염이 자라 겨울철 보온력(+135) 제공", "수염을 깎아 부활 장치인 '고기 우상(Meat Effigy)'의 핵심 재료로 사용", "스킬트리를 통해 횃불 투척, 연금술 물질 변환(트랜스뮤테이션), 과학 제작 가속"], "weaknesses": ["전투나 자원 채집에 특화된 폭발적인 고유 능력이 부족함", "여름철에는 수염 때문에 더위를 더 빨리 타므로 여름 전 면도 필수"], "skill_tree": "스킬트리: 횃불 화염 방사 및 지속시간 확장, 광물/보석 변환 연금술, 인벤토리 내 과학 제작 속도 극대화", "newbie_tip": "돈스타브의 기본 시스템(체온, 허기, 정신력, 카이팅)을 정석대로 익히기에 가장 훌륭합니다. 겨울이 오기 전 수염을 깎지 말고 길러두세요.", "icon": "images/characters/wilson.png"}, {"id": "winona", "name_ko": "위노나", "name_en": "Winona", "title": "노련한 기술공", "tier": "A+", "stars": 2, "role": "base", "role_name": "기지 건축/자동화", "stats": {"hp": 150, "hunger": 150, "sanity": 200}, "diet": "잡식 (표준)", "strengths": ["모든 구조물과 아이템 제작 속도가 2배 빠름", "찰리의 어둠 공격(찰리 피격)을 1회 완전 무효화", "전용 '수선 테이프'로 옷, 텐트, 가방의 내구도를 무한 수리", "전용 '투석기(자동 포탑)'와 '발전기'로 하운드 및 보스 자동 요격 요새 구축"], "weaknesses": ["허기가 50 미만으로 떨어지면 제작 속도가 느려지고 허기 소모량이 늘어남", "투석기 요새 구축을 위해 대량의 돌과 초석, 보석이 필요함"], "skill_tree": "스킬트리: 보석 발전기 효율 상승, 투석기 타겟팅 및 사거리 강화, 원격 전력망 구축", "newbie_tip": "하운드 습격이나 보스가 무섭다면 위노나의 투석기 3~4대를 기지 외곽에 설치하세요. 플레이어가 아무것도 안 해도 투석기가 돌을 던져 알아서 사냥해줍니다.", "icon": "images/characters/winona.png"}, {"id": "wolfgang", "name_ko": "볼프강", "name_en": "Wolfgang", "title": "천하장사", "tier": "A+", "stars": 2, "role": "combat", "role_name": "전투 딜탱", "stats": {"hp": 200, "hunger": 200, "sanity": 200}, "diet": "잡식 (대식가)", "strengths": ["전용 덤벨 운동을 통해 '강인한 상태(Mighty)' 돌입 시 공격력 2.0배 폭증", "강인한 상태에서 이동속도 증가 및 채광/벌목 1타 파괴", "무거운 물건(체스 조각, 대리석 등)을 들어도 이동속도 저하가 전혀 없음", "보스를 단 10~20초 만에 녹여버리는 돈스타브 최강의 근접 DPS"], "weaknesses": ["어둠과 몬스터 근접 시 정신력이 10% 더 빠르게 감소 (공포증)", "근육 게이지가 떨어져 쇠약 상태가 되면 공격력이 0.75배로 감소", "허기 소모 속도가 최대 3배까지 증가하여 엄청난 양의 식량 소모"], "skill_tree": "스킬트리: 덤벨 효율 및 지속시간 증가, 코칭 호루라기로 파티원 버프, 무거운 물체 투척", "newbie_tip": "평소에는 덤벨을 들고 가볍게 유지하다가, 보스전 직전에 덤벨 운동으로 근육을 꽉 채우고 햄 몽둥이로 난타하면 어떤 보스든 쉽게 잡을 수 있습니다.", "icon": "images/characters/wolfgang.png"}, {"id": "woodie", "name_ko": "우디", "name_en": "Woodie", "title": "캐나다 벌목꾼", "tier": "A", "stars": 2, "role": "gathering", "role_name": "자원 채집/탐색", "stats": {"hp": 150, "hunger": 150, "sanity": 200}, "diet": "잡식 (변신 조상 우상 섭취 가능)", "strengths": ["말하는 전용 도끼 '루시' (내구도 무한, 2배 빠른 벌목 속도)", "변신 우상을 먹어 3가지 형태로 자유 변신 가능:", "- 🦆 거위폼: 물 위를 걷고 압도적인 초고속으로 극초반 맵 100% 탐색", "- 🦫 비버폼: 도구 없이 초고속 벌목, 채광, 야간 시야 확보", "- 🦌 무스폼: 강력한 돌진 공격과 펀치로 보스전 및 잡몹 전투", "나무를 심을 때마다 정신력 +5 회복"], "weaknesses": ["변신이 풀리면 허기가 0으로 바닥나고 정신력이 대폭 감소함", "보름달 밤에는 원치 않아도 강제로 무작위 변신함"], "skill_tree": "스킬트리: 거위폼 물 위 보행 지속시간 증가, 무스폼 공격력/방어력 강화, 루시 도끼 투척 기능", "newbie_tip": "게임 시작 1~3일차에 괴물고기로 거위 조상을 만들어 먹고 물 위와 해안선을 달리며 맵의 전체 외곽선을 5분 만에 다 밝혀버릴 수 있습니다.", "icon": "images/characters/woodie.png"}, {"id": "wickerbottom", "name_ko": "위커바텀", "name_en": "Wickerbottom", "title": "책벌레 사서", "tier": "A", "stars": 3, "role": "support", "role_name": "농경/마법 서포터", "stats": {"hp": 150, "hunger": 150, "sanity": 250}, "diet": "미식가 (신선한 음식만 선호)", "strengths": ["과학 기계(Science Machine) 없이도 1단계 과학 아이템 즉시 제작 가능", "파피루스로 강력한 전용 마법서 제작 및 낭독:", "- 📖 '원예학 개론': 주변 작물, 나무, 풀, 잔가지를 1초 만에 즉시 성장", "- 📖 '새들의 세계': 새를 대량 소환하여 깃털 및 고기 복사", "- 📖 '종말이 다가온다': 번개를 소환하여 WX-78 충전 및 빛 확보", "- 📖 '촉수에 대하여': 촉수 밭을 소환하여 강력한 보스 유인 사냥"], "weaknesses": ["불면증으로 인해 텐트나 침낭에서 잠을 자며 정신력을 채울 수 없음", "상한 음식을 먹었을 때의 페널티가 일반 캐릭터보다 훨씬 가혹함", "마법서를 읽을 때마다 대량의 정신력이 소모됨"], "skill_tree": "스킬트리: 책장 보관함 제작, 마법서 정신력 소모 감소, 달/그림자 마법서 해금", "newbie_tip": "웜우드나 일반 농사와 함께 '원예학 개론'을 읽으면 식량이 상자 단위로 쏟아집니다. 정신력은 초록버섯 구이나 태피, 혹은 버니맨 모자로 채우세요.", "icon": "images/characters/wickerbottom.png"}, {"id": "wortox", "name_ko": "워톡스", "name_en": "Wortox", "title": "장난꾸러기 임프", "tier": "S", "stars": 2, "role": "support", "role_name": "파티 힐러/기동성", "stats": {"hp": 200, "hunger": 175, "sanity": 150}, "diet": "영혼 주식 (일반 음식 효율 50% 감소)", "strengths": ["주변 모든 생명체 사망 시 '영혼'을 자동 흡수", "영혼을 바닥에 방출하여 본인 및 주변 모든 파티원의 체력을 즉시 광역 치유 (+20 HP)", "영혼을 소모하여 맵 어디든 지형과 바다를 건너뛰는 순간이동(Soul Hop)", "영혼을 섭취하여 허기를 간편하게 채움 (음식 조리 부담 제로)"], "weaknesses": ["일반 음식을 먹을 때 체력, 허기 회복량이 50%로 반토막 남", "영혼을 20개 초과하여 소지하면 영혼이 폭발하며 정신력이 크게 깎임"], "skill_tree": "스킬트리: 영혼 힐 반경 및 회복량 증가, 순간이동 거리 확장 및 아군 동반 순간이동", "newbie_tip": "멀티플레이에서 파티에 워톡스 1명만 있으면 그 어떤 힐링 아이템도 필요 없습니다. 나비나 거미를 잡으며 영혼을 모아두었다가 위험할 때 힐을 팡팡 터뜨려주세요.", "icon": "images/characters/wortox.png"}, {"id": "wormwood", "name_ko": "웜우드", "name_en": "Wormwood", "title": "외로운 식물인간", "tier": "A", "stars": 3, "role": "gathering", "role_name": "농사/식물 마스터", "stats": {"hp": 150, "hunger": 150, "sanity": 200}, "diet": "식물 (음식으로 체력 회복 불가)", "strengths": ["경작기나 괭이 없이 맨땅에 모든 씨앗을 1초 만에 즉시 파종", "씨앗, 풀, 묘목, 나무를 심을 때마다 정신력이 급속도로 회복됨", "봄철이나 개화(Blooming) 상태가 되면 이동속도 폭증 및 꿀 생성", "전용 '가시 갑옷' 및 식물성 비료, 퇴비 랩 자체 제작"], "weaknesses": ["음식을 먹어도 체력이 전혀 회복되지 않음 (오직 거름, 퇴비 랩, 치료 연고로만 치유)", "주변의 식물이나 나무가 불타거나 벌목될 때 정신력이 크게 깎임", "불에 2배 취약하여 불이 붙으면 순식간에 사망 위험"], "skill_tree": "스킬트리: 거름을 통한 자체 버프, 광합성 속도 증가, 달빛 변이 작물 육성", "newbie_tip": "위커바텀과의 듀오는 돈스타브 최고의 농경 콤보입니다. 초반에 똥(비료)과 퇴비 랩을 항상 가방에 넉넉히 챙겨 체력을 관리하세요.", "icon": "images/characters/wormwood.png"}, {"id": "maxwell", "name_ko": "맥스웰", "name_en": "Maxwell", "title": "꼭두각시 술사", "tier": "A", "stars": 3, "role": "gathering", "role_name": "자원 복사/서포트", "stats": {"hp": 75, "hunger": 150, "sanity": 200}, "diet": "잡식 (표준)", "strengths": ["초당 +6.7의 압도적인 자연 정신력 회복 (악몽 연료를 써도 멘탈 유지)", "전용 마도서 '코덱스 움브라'로 그림자 분신 소환:", "- 🪓 벌목/채광 분신: 나무와 돌을 1초 만에 쓸어담는 자원 채집의 신", "- ⚔️ 그림자 투사 & 그림자 감옥: 적을 속박하고 강력한 지속 딜링", "마술 모자로 인벤토리를 초월한 마법 창고 공유"], "weaknesses": ["최대 체력이 단 75로 게임 내 최하위권 (강력한 몹에게 1~2대 스치면 사망)", "방어구 없이 전투에 뛰어드는 것은 절대 금물"], "skill_tree": "스킬트리: 그림자 하수인 지속시간 및 행동 반경 확장, 그림자 마법 공격력 강화", "newbie_tip": "초반 자원 수급(나무, 석재, 숯) 속도는 전 캐릭터 중 단연 압도적 1위입니다. 단, 피통이 75이므로 평소에 나무갑옷과 풋볼헬멧을 필수로 착용하세요.", "icon": "images/characters/maxwell.png"}, {"id": "wx78", "name_ko": "WX-78", "name_en": "WX-78", "title": "감정 없는 로봇", "tier": "B+", "stars": 3, "role": "utility", "role_name": "스펙 커스텀 로봇", "stats": {"hp": 125, "hunger": 125, "sanity": 150}, "diet": "로봇 (상하거나 썩은 음식도 신선도 100% 효율로 섭취)", "strengths": ["유통기한이 다 되어 빨간색으로 상한 음식도 페널티 없이 완벽 섭취", "바이오 스캐너로 몬스터를 분석하여 다양한 모듈 회로 장착 가능:", "- 💡 조명/야간투시 모듈, ⚡ 이동속도 가속 모듈, ❄️ 보온/보랭 모듈, ❤️ 최대 체력 증폭 모듈", "번개를 맞으면 체력 회복과 함께 빛을 뿜고 이동속도가 폭증하는 '과충전' 상태"], "weaknesses": ["비에 젖으면 스파크가 튀며 지속적으로 체력 피해를 입음 (방수 장비 필수)", "초반 기본 스탯이 낮아 회로를 장착하기 전까지는 다소 취약함"], "skill_tree": "스킬트리: 회로 슬롯 확장, 바이오 스캐너 제작 비용 감소, 과충전 지속시간 증가", "newbie_tip": "봄이 오기 전에 눈알 우산이나 우비를 반드시 준비하세요. 이속 모듈과 조명 모듈을 장착하면 횃불 없이 밤에도 맵을 날아다닐 수 있습니다.", "icon": "images/characters/wx78.png"}, {"id": "willow", "name_ko": "윌로우", "name_en": "Willow", "title": "방화광", "tier": "B+", "stars": 2, "role": "utility", "role_name": "어둠/정신력 방어", "stats": {"hp": 150, "hunger": 150, "sanity": 120}, "diet": "잡식 (표준)", "strengths": ["무한 내구도 '윌로우의 라이터' (간이 요리 가능, 어둠 완벽 차단)", "불과 열기에 완전 면역이며 불 근처에 있으면 정신력이 고속 회복됨", "정신력이 낮아지면 곰인형 '버니'가 거대 수호자로 변신하여 그림자 괴물의 어그로를 100% 흡수하고 격퇴"], "weaknesses": ["추위에 약하여 겨울철 동사 위험이 빠름", "베이스 캠프 근처에서 불장난을 치다가 구조물을 태워먹을 위험"], "skill_tree": "스킬트리: 버니 내구도/전투력 강화, 화염 방사기 스킬, 라이터 조명 반경 증가", "newbie_tip": "정신력이 떨어져 악몽 괴물이 나타날 때 당황하지 말고 버니를 바닥에 내려놓으세요. 버니가 거대화되어 모든 괴물을 대신 때려잡아 줍니다.", "icon": "images/characters/willow.png"}, {"id": "walter", "name_ko": "월터", "name_en": "Walter", "title": "용감한 보이 스카우트", "tier": "B", "stars": 3, "role": "utility", "role_name": "원거리 저격/캠핑", "stats": {"hp": 130, "hunger": 110, "sanity": 200}, "diet": "잡식 (캠핑 요리 특화)", "strengths": ["어둠, 거대 보스, 몬스터를 봐도 정신력이 전혀 감소하지 않는 강철 멘탈", "전용 원거리 '새총'으로 안전한 사격 (빙결탄, 감속탄, 대미지탄, 똥탄)", "충실한 애완견 '워비'를 추가 9칸 가방 창고 및 탑승 라이딩으로 활용", "모닥불 근처에서 이야기하기, 텐트 수면 시 효율 2배"], "weaknesses": ["피격을 당하면 입은 피해량에 비례하여 정신력이 급격하게 폭락함", "벌 알레르기가 있어 벌 공격을 받으면 추가 피해를 입음", "의류 아이템의 정신력 회복 효과를 받지 못함"], "skill_tree": "스킬트리: 새총 특수 탄환 제작 해금, 워비 탑승 속도 증가, 캠핑 텐트 수리", "newbie_tip": "워비를 타고 달리면 초반에 엄청난 이동속도로 맵을 탐색하고 아이템을 담을 수 있습니다. 적에게 한 대도 맞지 않는 원거리 카이팅에 익숙해져야 합니다.", "icon": "images/characters/walter.png"}, {"id": "webber", "name_ko": "웨버", "name_en": "Webber", "title": "괴물 소년", "tier": "B", "stars": 2, "role": "gathering", "role_name": "거미 군단 육성", "stats": {"hp": 175, "hunger": 175, "sanity": 100}, "diet": "몬스터 식성 (괴물고기 무페널티 섭취)", "strengths": ["모든 거미와 친구 (거미에게 고기를 주면 길들여 대규모 거미 군단 지휘)", "거미줄 위를 걸어도 이동속도가 느려지지 않고 오히려 가속됨", "거미집을 직접 제작/업그레이드하고 침낭처럼 들어가 휴식 가능", "괴물고기를 생으로 먹거나 구워 먹어도 체력/정신력 페널티 0", "풍성한 실크 수염을 길러 실크 파밍 및 보온 효과"], "weaknesses": ["돼지인간, 버니맨, 캣쿤과 무조건 적대 관계 (접근 시 선공당함)", "정신력 최대치가 100으로 낮아 세심한 멘탈 케어 필요"], "skill_tree": "스킬트리: 특수 돌연변이 거미(간호사 거미, 점프 거미 등) 변이, 거미 휘파람 조작", "newbie_tip": "베이스 캠프는 돼지마을에서 멀리 지으세요. 거미집 몇 개를 베이스 근처에 깔아두면 괴물고기, 거미줄, 거미샘(치료제)이 평생 마르지 않습니다.", "icon": "images/characters/webber.png"}, {"id": "warly", "name_ko": "왈리", "name_en": "Warly", "title": "미식가 셰프", "tier": "A", "stars": 4, "role": "support", "role_name": "특수 버프 요리사", "stats": {"hp": 120, "hunger": 250, "sanity": 200}, "diet": "고메 미식가 (다양한 요리 필수, 날음식 거부)", "strengths": ["전용 '휴대용 냄비'와 '양념 절구통'으로 즉석 고급 요리 및 조미료 제작", "사기적인 특수 버프 요리 독점 제조:", "- ⚡ '볼트 염소 젤리': 모든 공격에 젖은 적 대상 2.5배 감전 데미지 부여", "- 🌶️ '고추 시즈닝': 공격력 +20% 증가", "- 🧄 '마늘 시즈닝': 받는 피해 33% 영구 감소", "- 🍲 '무네쉬': 비오는 날 완전 방수 + 체온 유지", "식품 유통기한을 2배 늘려주는 '셰프 파우치' 가방 제작"], "weaknesses": ["같은 요리를 이틀 이내에 연속으로 먹으면 회복량과 포만감이 급감함", "조리되지 않은 생고기나 당근 등 날음식을 절대 먹지 않음"], "skill_tree": "스킬트리: 신규 양념 레시피 해금, 휴대용 냄비 조리 가속, 식재료 보존력 증대", "newbie_tip": "솔로 플레이보다는 3~4인 멀티플레이에서 파티원들에게 최강의 공격력/방어력 버프를 부여하는 최고의 레이드 서포터입니다.", "icon": "images/characters/warly.png"}, {"id": "wanda", "name_ko": "완다", "name_en": "Wanda", "title": "시간 술사", "tier": "A+", "stars": 5, "role": "combat", "role_name": "초고점 하이리스크 딜러", "stats": {"hp": "나이 (20~80세)", "hunger": 175, "sanity": 200}, "diet": "잡식 (체력 회복 아이템 효과 없음)", "strengths": ["체력 대신 '나이'로 생존하며, 전용 '영원의 시계'로 나이를 젊게 되돌려 치유", "나이가 65세 이상으로 늙을수록 전용 무기 '경종 시계'의 공격력이 폭발:", "- 기본 공격력 81.6 ~ 그림자 장착 시 최대 **142.8**의 압도적 1위 깡딜과 긴 리치", "맵 어디든 순간이동하는 '워프 시계' 및 사망한 아군을 부활시키는 '부활 시계' 제작"], "weaknesses": ["일반 체력 회복 음식이나 힐링 포션이 전혀 통하지 않음", "80세가 되면 즉사하므로 피격 시 즉시 시계를 눌러 나이를 되돌려야 함 (극도의 숙련도 요구)"], "skill_tree": "스킬트리: 시계 쿨타임 감소, 그림자 시계 피해량 증폭, 균열 워프 게이트 생성", "newbie_tip": "초보자에게는 매우 위험하지만, 돈스타브 최강의 데미지를 자랑합니다. 숙련자가 잡으면 모든 보스가 10초 만에 분해됩니다.", "icon": "images/characters/wanda.png"}, {"id": "wurt", "name_ko": "워트", "name_en": "Wurt", "title": "어린 어인", "tier": "B", "stars": 3, "role": "base", "role_name": "어인 왕국 건설", "stats": {"hp": 150, "hunger": 200, "sanity": 150}, "diet": "완전 채식주의자 (고기/생선 섭취 불가)", "strengths": ["늪지대에서 이동속도 증가 및 익사하지 않음", "어인들과 동맹을 맺고 '어인 집'과 '어인 왕'을 세워 거대 왕국 건설", "어인 왕이 살아있으면 최대 체력 250, 허기 250, 정신력 200으로 스펙 대폭 상승", "살아있는 물고기를 가방에 넣고 다니면 정신력이 지속적으로 차오름"], "weaknesses": ["고기류를 일체 먹지 못함 (과일, 채소, 두리안, 용과파이 주식)", "돼지인간과 적대 관계"], "skill_tree": "스킬트리: 어인 전사 강화, 늪지 타일 제작, 어인 왕 버프 효과 극대화", "newbie_tip": "어인 왕을 옹립하고 어인 집을 10개 이상 지으면, 나무 베기와 돌 캐기, 보스 레이드를 어인 군단이 대신해 주는 왕국 시뮬레이션이 가능합니다.", "icon": "images/characters/wurt.png"}, {"id": "wes", "name_ko": "웨스", "name_en": "Wes", "title": "침묵의 마임 광대", "tier": "F", "stars": 5, "role": "special", "role_name": "하드코어 챌린지", "stats": {"hp": 75, "hunger": 75, "sanity": 75}, "diet": "잡식 (대식가 패널티)", "strengths": ["풍선 인형을 불어 몬스터의 시선을 분산시키는 미끼 제작 가능", "말을 하지 않아 소음이 없음 (장점 아님)"], "weaknesses": ["모든 기본 스탯 최하위 (75/75/75)", "기본 공격력 0.75배, 허기 소모 속도 1.25배, 동사/열사 위험도 최고", "모든 작업 효율 최하"], "skill_tree": "스킬트리: 풍선 모자, 풍선 조끼, 풍선 속도 버프 등 예능형 스킬", "newbie_tip": "공식 하드코어 난이도 챌린지용 캐릭터입니다! 초보자는 절대 선택하지 마세요.", "icon": "images/characters/wes.png"}, {"id": "wonkey", "name_ko": "원키", "name_en": "Wonkey", "title": "저주받은 원숭이", "tier": "C", "stars": 3, "role": "special", "role_name": "원숭이 섬 저주 변신", "stats": {"hp": 125, "hunger": 175, "sanity": 100}, "diet": "잡식 (바나나 선호)", "strengths": ["4족 보행 시 이동속도가 매우 빠름", "원숭이 섬의 원숭이들과 우호적", "바나나를 섭취하면 추가 정신력 회복"], "weaknesses": ["저주를 풀지 않으면 인간의 언어를 구사할 수 없고 원숭이 소리만 냄"], "skill_tree": "원숭이 섬 퀘스트 연계", "newbie_tip": "원숭이 섬 탐험 중 저주를 받아 변신하게 되는 이스터에그성 캐릭터입니다.", "icon": "images/characters/wonkey.png"}];
+    const synergies = [{"tier": "SS", "name": "초보 불패 갓조합 (초보자 듀오 0순위)", "pair": ["wigfrid", "wendy"], "badge": "불패의 생존 듀오", "desc": "위그프리드의 강력한 단일 탱킹/흡혈 딜링과 웬디(아비게일)의 광역 잡몹 학살이 완벽히 맞물리는 DST 최고의 입문 듀오입니다.", "points": ["🕷️ **거미/잡몹 0초 컷**: 웬디의 아비게일이 거미집, 개구리비, 벌집을 광역으로 쓸어담아 위그프리드의 식량인 '괴물고기'를 무한 복사합니다.", "🛡️ **방어구 공유**: 위그프리드가 80% 방어력의 '전투 투구'를 만들어 웬디에게 씌워주면 웬디의 생존력이 5배 상승합니다.", "👑 **보스전 분업**: 단일 보스는 위그프리드가 어그로를 끌어 흡혈 맞딜을 하고, 웬디는 아비게일과 함께 뒤에서 딜을 보조합니다.", "🥩 **식량 문제 해결**: 웬디가 모아온 고기로 위그프리드가 냄비에서 미트볼과 육포를 양껏 조리해 나누어 먹습니다."]}, {"tier": "SS", "name": "무한 헬스장 & 영혼 앰뷸런스", "pair": ["wolfgang", "wortox"], "badge": "보스 분쇄 폭딜 듀오", "desc": "게임 내 최강의 2배 깡딜러 볼프강과 무한 광역 힐러 워톡스가 만나 어떠한 보스도 안전하고 빠르게 분쇄하는 조합입니다.", "points": ["❤️ **무한 체력 케어**: 볼프강이 덤벨을 들고 보스를 두들겨 패는 동안, 쏟아지는 영혼을 워톡스가 흡수하여 실시간 광역 힐을 넣어줍니다.", "⚡ **초고속 기동성**: 워톡스의 영혼 순간이동(Soul Hop)으로 지형을 무시하고 자원을 탐색하며 볼프강에게 식량을 배달합니다.", "💪 **파밍 극대화**: 볼프강의 막강한 힘으로 대형 몬스터와 유적을 순식간에 정복할 수 있습니다."]}, {"tier": "S", "name": "초고속 꿀농사 & 식량 무한 복사", "pair": ["wickerbottom", "wormwood"], "badge": "문명 폭발 농경 듀오", "desc": "밭을 갈 필요 없이 땅에 즉시 씨앗을 심는 웜우드와 책 한 권으로 모든 작물을 즉시 성장시키는 위커바텀의 폭발적인 시너지입니다.", "points": ["🌾 **1초 만에 수확**: 웜우드가 맨땅에 씨앗을 10~20개 심고, 위커바텀이 '원예학 개론' 책을 읽으면 1초 만에 다 자라 수확 가능합니다.", "🐉 **용과파이 양산**: 고효율 체력/허기 회복 음식인 용과파이를 상자 단위로 비축하여 겨울과 보스전을 식량 걱정 없이 날 수 있습니다.", "🪵 **목재/풀/가지 무한**: 풀과 잔가지, 나무 묘목도 책 한 번으로 수백 개씩 즉시 증식시킵니다."]}, {"tier": "S", "name": "무적 투석기 요새 & 자원 굴착기", "pair": ["winona", "maxwell"], "badge": "자동화 기지 방어 듀오", "desc": "맥스웰의 그림자 분신으로 석재와 목재를 광속으로 채굴하고, 위노나가 그 자원으로 투석기 포탑 요새를 지어 하운드와 보스를 자동 격퇴합니다.", "points": ["⛏️ **빛의 속도 채광**: 맥스웰의 그림자 광부와 벌목꾼이 숲과 채석장을 5분 만에 싹쓸이하여 수천 개의 돌과 나무를 가져옵니다.", "🏰 **자동 요새 완성**: 위노나가 발전기와 투석기 6~8대를 기지 주변에 깔아 하운드 습격 및 계절 보스를 100% 자동 사냥합니다.", "✂️ **수선 테이프 공급**: 위노나가 장비 수선 테이프를 만들어 맥스웰의 장비를 무한 수리해 줍니다."]}, {"tier": "S", "name": "보스 순삭 4인 레이드 파티 (3~4인 풀파티 추천)", "pair": ["warly", "wanda", "wigfrid", "wortox"], "badge": "엔드게임 보스 학살 파티", "desc": "버프 요리사 + 폭딜러 + 찬가 탱커 + 파티 힐러가 모여 용파리, 비퀸, 퓨얼위버 등 엔드 보스를 10초 컷하는 최강의 드림팀입니다.", "points": ["🌶️ **버프 중첩**: 왈리의 '볼트 염소 젤리(감전 2.5배 딜)' + '고추 시즈닝(+20% 딜)' + 위그프리드의 '전투 찬가(공격/방어 버프)' 동시 가동!", "💥 **폭발적 DPS**: 완다(또는 볼프강)가 평타 한 방당 200~300의 정신나간 데미지로 보스를 두들겨 팹니다.", "🩸 **완벽한 안정성**: 위그프리드가 어그로를 잡고 워톡스가 영혼 광역 힐을 끊임없이 돌려 전원 노데스로 클리어합니다."]}, {"tier": "A", "name": "초고속 맵 탐색 & 자원 부자 듀오", "pair": ["woodie", "wendy"], "badge": "초반 개척 스피드 듀오", "desc": "우디의 거위폼/비버폼 변신으로 맵 외곽과 나무를 초고속으로 털고, 웬디가 밤마다 거미와 사냥터를 청소하는 안정적인 개척 조합입니다.", "points": ["🦆 **3일 만에 맵 정복**: 우디가 거위로 변신해 물 위를 달리며 지도 100%를 밝히고 명당 베이스 자리를 빠르게 탐색합니다.", "🪓 **무한 목재 & 실크**: 우디의 루시 도끼와 웬디의 아비게일이 만나 베이스 건축에 필요한 1차 자원을 가장 빠르게 모읍니다."]}, {"tier": "D", "name": "⚠️ 역시너지 주의: 거미 군주 vs 발키리", "pair": ["webber", "wigfrid"], "badge": "비추천 조합", "desc": "웨버 때문에 돼지마을 습격과 돼지가죽 수급이 어렵고, 위그프리드의 고기 소모량과 웨버의 거미 운영 간에 충돌이 발생하기 쉽습니다.", "points": ["🐷 돼지가죽(투구 재료) 수급 난이도 상승", "🕷️ 거미집 배치 위치에 대한 파티 내 동선 충돌 위험"]}, {"tier": "D", "name": "⚠️ 역시너지 주의: 요리 거부 식물인간 vs 셰프", "pair": ["wormwood", "warly"], "badge": "비추천 조합", "desc": "웜우드는 음식을 먹어도 체력이 회복되지 않아, 왈리가 정성스레 만든 특수 요리와 힐링 음식의 혜택을 거의 누리지 못합니다.", "points": ["🍲 왈리의 힐링 요리가 웜우드에게는 무용지물", "🌱 웜우드는 별도의 거름/퇴비 치료 아이템을 스스로 챙겨야 함"]}];
+    const mods = [{"name_ko": "통합 상태창 (스탯/체온/계절 완벽 표시)", "name_en": "Combined Status", "type": "Client", "category": "ui", "desc": "체력, 허기, 정신력의 정확한 숫자 수치, 체온, 나쁜 날씨, 현재 계절 일수, 달 위상(보름달 카운트)을 화면 우측 상단에 정밀하게 표시합니다.", "config_tip": "체온 표시(섭씨/화씨) 및 보름달까지 남은 일수 표시 옵션을 활성화하면 계절과 보름달 대비가 매우 수월해집니다.", "hotkey": "상시 표시"}, {"name_ko": "기하학적 건축 가이드 (그리드 스냅)", "name_en": "Geometric Placement", "type": "Client", "category": "ui", "desc": "건물, 밭, 벽, 묘목을 설치할 때 바닥에 정렬 격자(Grid)와 스냅 가이드라인을 표시하여 완벽하고 깔끔한 대칭 베이스를 건축하게 해줍니다.", "config_tip": "게임 중 'B' 키를 누르면 그리드 격자 색상, 각도 회전, 스냅 민감도를 자유롭게 변경할 수 있습니다.", "hotkey": "B 키 (설정 창)"}, {"name_ko": "자동 행동 큐 (연속 벌목/채광/수확)", "name_en": "ActionQueue RB3", "type": "Client", "category": "ui", "desc": "Shift 키를 누른 채 마우스 드래그로 영역을 지정하면, 범위 내의 모든 나무 벌목, 돌 채광, 잔가지/풀 채집, 땅 파기 작업을 캐릭터가 자동으로 연속 실행합니다.", "config_tip": "F3 키 또는 Shift + 더블클릭으로 필터링 가능하며, 뉴비의 노가다 시간을 90% 줄여주는 필수 모드입니다.", "hotkey": "Shift + 마우스 좌클릭 드래그"}, {"name_ko": "상시 미니맵 HUD", "name_en": "Minimap HUD", "type": "Client", "category": "ui", "desc": "M 키를 눌러 전체 맵을 열지 않아도 화면 우측 상단에 실시간 미니맵 위젯을 상시 띄워줍니다.", "config_tip": "미니맵 테두리를 마우스로 드래그하여 원하는 위치와 크기로 조절할 수 있습니다.", "hotkey": "M키(전체맵) / 마우스 휠(미니맵 확대/축소)"}, {"name_ko": "팀원 위치 및 나침반 공유", "name_en": "Global Positions", "type": "Server/Client", "category": "ui", "desc": "멀티플레이 시 모든 파티원의 실시간 위치가 전체 맵에 표시되며, 화면 가장자리에 팀원의 방향과 거리를 가리키는 나침반 포인터가 표시됩니다.", "config_tip": "팀원이 탐색한 맵 영역도 실시간으로 공유되어 전체 맵 밝히기가 3배 빨라집니다.", "hotkey": "상시 활성화"}, {"name_ko": "원클릭 스탯/아이템 상태 알림", "name_en": "Status Announcements", "type": "Client", "category": "ui", "desc": "Alt + 클릭 또는 Shift + 클릭으로 자신의 체력/허기/정신력 상태나 인벤토리 아이템을 클릭하면 팀원 전체 채팅창에 현재 상태를 즉시 브리핑합니다.", "config_tip": "예: 체력 게이지를 Alt+클릭하면 '내 체력이 15밖에 안 남았어!'라고 자동 채팅을 칩니다.", "hotkey": "Alt + 좌클릭 (스탯/아이템)"}, {"name_ko": "아이템 & 몬스터 정보 툴팁", "name_en": "Show Me (Refresh) / Item Info", "type": "Server/Client", "category": "ui", "desc": "음식에 마우스를 올리면 유통기한, 회복 스탯(체력/허기/정신력)이 표시되고, 몬스터의 공격력, 체력, 공격 쿨타임 등을 툴팁으로 상세히 보여줍니다.", "config_tip": "상한 음식을 실수로 먹는 일을 방지하고, 요리의 회복량을 미리 확인할 수 있어 매우 유용합니다.", "hotkey": "마우스 호버"}, {"name_ko": "보스 & 몬스터 체력바", "name_en": "Epic Healthbar / Simple Health Bar DST", "type": "Client", "category": "ui", "desc": "보스 몬스터 등장 시 화면 상단에 거대한 레이드 체력바를 띄워주고, 일반 몬스터 머리 위에 직관적인 체력 게이지를 표시합니다.", "config_tip": "보스의 남은 체력을 숫자로 확인할 수 있어 카이팅과 딜 계산이 훨씬 쉬워집니다.", "hotkey": "상시 활성화"}, {"name_ko": "스마트 요리 냄비 레시피 예측", "name_en": "Craft Pot / SmartCrockPot", "type": "Client", "category": "ui", "desc": "요리 냄비(Crock Pot)에 재료를 넣었을 때 완성될 요리의 결과물과 회복 스탯을 조리 전에 미리 시각적으로 보여줍니다.", "config_tip": "재료를 낭비하거나 '괴물 라자냐', '젖은 신발' 같은 쓰레기 요리가 나오는 참사를 100% 예방해 줍니다.", "hotkey": "냄비 클릭 시 자동 표시"}, {"name_ko": "요리 재료 자동 투입", "name_en": "Auto Cooking", "type": "Client", "category": "ui", "desc": "상자나 인벤토리에서 레시피를 선택하면 냄비에 재료 4개를 원클릭으로 자동 배치하여 대량 요리 시의 피로도를 없애줍니다.", "config_tip": "미트볼이나 피에로기를 수십 개씩 연속 조리할 때 최고의 편의성을 제공합니다.", "hotkey": "냄비 UI 버튼"}, {"name_ko": "확장된 인디케이터 포인터", "name_en": "Extended Indicators WIP", "type": "Client", "category": "ui", "desc": "화면 밖에 있는 보스 몬스터, 위험 요소, 아군의 위치를 화면 가장자리 화살표로 알려줍니다.", "config_tip": "사각지대에서 기습하는 몬스터를 사전에 방지할 수 있습니다.", "hotkey": "상시 활성화"}, {"name_ko": "확장 맵 아이콘", "name_en": "Extended Map Icons", "type": "Client", "category": "ui", "desc": "전체 맵 상에 드랍된 아이템, 구조물, 몬스터의 아이콘을 더욱 다양하고 선명하게 표시합니다.", "config_tip": "떨어뜨린 무기나 보온돌의 위치를 맵에서 바로 찾을 수 있습니다.", "hotkey": "맵(M) 화면"}, {"name_ko": "굶지마 다함께 한글화 (클라이언트 / 서버)", "name_en": "Korean Localization (Client/Server)", "type": "Client / Server", "category": "korean", "desc": "게임 내 모든 아이템, 대사, 시스템 메시지, 스킬트리 설명을 완벽한 한국어로 번역해 줍니다.", "config_tip": "클라이언트 모드와 서버 모드를 모두 활성화하면 완벽한 한글 환경이 구축됩니다.", "hotkey": "상시 적용"}, {"name_ko": "인게임 한글 입력기 v2.0.5", "name_en": "Korean IME In-game", "type": "Client", "category": "korean", "desc": "게임 내 채팅창, 표지판, 상자 이름 입력 시 한글이 깨지거나 자음/모음이 분리되지 않고 매끄럽게 타이핑되도록 지원합니다.", "config_tip": "한/영 전환 키가 정상 작동하며 멀티플레이 채팅에 필수적입니다.", "hotkey": "한/영 키"}, {"name_ko": "영농 그리드 자동 스냅 괭이질", "name_en": "Snapping tills", "type": "Client", "category": "gameplay", "desc": "경작기(Farm Soil)에 괭이질을 할 때 완벽한 3x3 (9칸) 또는 4x4 (16칸) 황금 비율 그리드로 자동 정렬하여 거대 작물 육성을 돕습니다.", "config_tip": "거대 작물(Giant Crops)을 재배할 때 필수적인 영농 정렬 모드입니다.", "hotkey": "C / V 키 (격자 모드 변경)"}, {"name_ko": "아이템 자동 겹치기 & 빠른 줍기", "name_en": "Auto Stack and Pick Up", "type": "Server/Client", "category": "gameplay", "desc": "바닥에 떨어진 동일 아이템을 자동으로 한 묶음으로 겹쳐주고, 스페이스바를 누르면 주변 아이템을 초고속으로 수거합니다.", "config_tip": "서버 랙을 줄이고 인벤토리 정리 시간을 크게 단축시킵니다.", "hotkey": "스페이스바"}, {"name_ko": "보관함 999 스택 확장", "name_en": "999 Stack Size / Increased Stack size", "type": "Server", "category": "gameplay", "desc": "기존 20개/40개 제한이던 아이템 최대 보관 묶음 수량을 999개로 확장하여 상자 부족 스트레스를 완벽히 해결합니다.", "config_tip": "자원(나무, 돌, 풀, 잔가지)을 상자 하나에 무제한급으로 보관할 수 있어 베이스 면적이 절약됩니다.", "hotkey": "상시 적용"}, {"name_ko": "채집 모션 딜레이 삭제", "name_en": "Quick Pick+", "type": "Server", "category": "gameplay", "desc": "풀, 잔가지, 베리 덤불, 갈대를 채집할 때의 허리 숙이는 모션을 없애고 즉시 인벤토리에 들어오게 합니다.", "config_tip": "초반 파밍 속도가 2배 이상 빨라져 시간 절약에 매우 유용합니다.", "hotkey": "스페이스바 채집"}, {"name_ko": "상자 스마트 미니표지판 자동 각인", "name_en": "Smart Minisign Revisited", "type": "Server/Client", "category": "gameplay", "desc": "보물 상자에 미니 표지판을 부착하고 아이템을 넣으면, 상자 표지판에 해당 아이템의 그림이 자동으로 각인됩니다.", "config_tip": "깃털 펜으로 일일이 그릴 필요 없이 상자 안 내용물을 한눈에 분류/확인할 수 있습니다.", "hotkey": "상자에 미니표지판 부착"}, {"name_ko": "상자/구조물 포장 이사 박스", "name_en": "Moving Box", "type": "Server", "category": "gameplay", "desc": "상자 안에 든 아이템을 비우지 않고도 상자나 구조물을 통째로 박스에 포장하여 원하는 위치로 옮길 수 있습니다.", "config_tip": "베이스 리모델링이나 기지 이전 시 상자를 부수고 다시 짓는 번거로움을 완전히 없애줍니다.", "hotkey": "포장 박스 제작"}, {"name_ko": "표지판 빠른 이동 (패스트 트래블)", "name_en": "Fast Travel", "type": "Server", "category": "gameplay", "desc": "원거리 표지판(Signpost) 간을 클릭하여 목적지 표지판으로 즉시 순간이동할 수 있습니다.", "config_tip": "베이스 캠프, 돼지마을, 오아시스, 비팔로 서식지에 표지판을 세워두면 이동 시간을 대폭 줄일 수 있습니다.", "hotkey": "표지판 우클릭"}, {"name_ko": "배낭 + 갑옷 동시 장착 슬롯 분리", "name_en": "Extra Equip Slots", "type": "Server", "category": "gameplay", "desc": "몸통 장비 슬롯을 분리하여 배낭(Backpack)과 몸통 갑옷(나무갑옷, 대리석갑옷 등) 또는 목걸이를 동시에 착용할 수 있게 해줍니다.", "config_tip": "전투 시 가방을 바닥에 내려놓아야 하는 불편함이 사라져 초보자 생존율이 대폭 상승합니다.", "hotkey": "인벤토리 슬롯 확장"}, {"name_ko": "대용량 창고 구조물", "name_en": "[DST] Storeroom", "type": "Server", "category": "gameplay", "desc": "수십 칸의 대형 인벤토리를 제공하는 전용 창고 건물을 건축할 수 있게 해줍니다.", "config_tip": "기지 중심부에 설치하여 공용 보관 창고로 사용하기 좋습니다.", "hotkey": "건축 탭"}, {"name_ko": "웜홀 & 싱크홀 색상 매칭 아이콘", "name_en": "Wormholes and Sinkholes Icons", "type": "Client / Server", "category": "gameplay", "desc": "서로 연결된 웜홀(Wormhole)과 동굴 입구(Sinkhole)를 맵 상에 동일한 색상 번호 아이콘으로 표시합니다.", "config_tip": "어느 웜홀을 타면 어디로 나오는지 외울 필요 없이 맵에서 즉시 확인할 수 있습니다.", "hotkey": "맵(M) 화면"}, {"name_ko": "정돈된 아이템 드랍", "name_en": "Geometric Drop", "type": "Client", "category": "gameplay", "desc": "아이템을 바닥에 버릴 때 무작위로 흩어지지 않고 깔끔한 격자 정렬 형태로 가지런히 떨어뜨립니다.", "config_tip": "기지 바닥 정리 및 자원 진열 시 매우 깔끔합니다.", "hotkey": "아이템 버리기"}, {"name_ko": "고급 삽 기능 (루트 정리)", "name_en": "Adshovel", "type": "Server", "category": "gameplay", "desc": "삽을 사용할 때 그루터기와 덤불 뿌리를 더욱 신속하고 편리하게 파낼 수 있습니다.", "hotkey": "삽 도구 사용"}, {"name_ko": "위험 조기 경보 시스템 (하운드/보스/지진 카운트다운)", "name_en": "Advanced Warning", "type": "Client", "category": "survival", "desc": "사냥개(하운드) 습격, 계절 거대 보스 접근, 동굴 지진 발생 수십 초 전에 화면 상단에 경고 아이콘과 카운트다운 타이머를 출력합니다.", "config_tip": "갑작스러운 하운드나 디어클롭스 기습에 당황하지 않고 미리 방어구와 무기를 준비할 시간을 확보해 줍니다.", "hotkey": "위험 접근 시 자동 팝업"}, {"name_ko": "화덕 부활 모드", "name_en": "Campfire Respawn", "type": "Server", "category": "survival", "desc": "사망하여 유령 상태가 되었을 때 화덕(Campfire/Firepit)을 우클릭하여 스스로 부활할 수 있습니다.", "config_tip": "부활 장치가 멀리 있어도 기지의 화덕에서 즉시 부활 가능하여 뉴비 파티에 큰 도움이 됩니다.", "hotkey": "유령 상태에서 화덕 우클릭"}, {"name_ko": "사망 시 아이템 보존 모드", "name_en": "Don't Drop Everything", "type": "Server", "category": "survival", "desc": "사망했을 때 인벤토리의 모든 아이템을 바닥에 쏟지 않고 보존하거나 일부만 떨어뜨리도록 설정합니다.", "config_tip": "사망 후 템 회수 중 2차 사망하는 사고를 방지합니다.", "hotkey": "사망 시 자동 적용"}, {"name_ko": "텐트 무제한 사용", "name_en": "Infinite Tent Uses", "type": "Server", "category": "survival", "desc": "텐트와 낮잠 천막의 사용 내구도 제한을 없애 무제한으로 휴식하고 정신력과 체력을 회복할 수 있습니다.", "config_tip": "거미줄이 부족한 초반에 텐트 유지 비용을 크게 아껴줍니다.", "hotkey": "텐트 상시 적용"}, {"name_ko": "만드레이크 리스폰", "name_en": "Mandrake Respawn", "type": "Server", "category": "survival", "desc": "맵 전체에 몇 개 없는 희귀 생물 만드레이크가 채집 후 일정 시간이 지나면 다시 생성됩니다.", "hotkey": "상시 적용"}, {"name_ko": "감정표현 휠 메뉴", "name_en": "Gesture Wheel", "type": "Client", "category": "survival", "desc": "G 키를 눌러 인사, 춤추기, 울기, 환호 등 다양한 캐릭터 제스처를 원형 휠 메뉴로 손쉽게 실행합니다.", "hotkey": "G 키"}, {"name_ko": "서버 랙 최적화 팩", "name_en": "Performance Pack (Server Lag Fix)", "type": "Server", "category": "survival", "desc": "월드 내의 엔티티 및 드랍 아이템 연산을 최적화하여 프레임 드랍과 멀티플레이 핑 지연(랙)을 크게 완화합니다.", "hotkey": "서버 백그라운드"}];
+    const roadmap = [{"season": "가을 (Autumn)", "days": "Day 1 ~ 5", "period": "극초반", "title": "외곽선 탐색 & 기초 생존 도구 확보", "goal": "지도의 외곽 해안선을 따라 돌며 맵 구조를 파악하고 기본 자원 비축", "todo": ["잔가지(40개), 풀(40개), 부싯돌(20개), 돌(20개), 금(10개) 채집", "밤에는 모닥불을 피우지 말고 '횃불'을 손에 들고 계속 이동하며 맵 탐색", "꽃, 당근, 베리를 주워 허기 유지 및 나비(타격 시 체력 +8, 허기 +9) 사냥", "과학 장치(Science Machine)를 길가에 임시 설치 -> '배낭', '삽', '창', '나무갑옷' 선제작 후 망치로 철거"], "craft": ["횃불", "도끼", "곡괭이", "과학 장치", "배낭", "삽", "창", "나무갑옷"], "trap": "⚠️ 주의: 첫날부터 밤에 모닥불 피워놓고 가만히 앉아있지 마세요! 횃불을 들고 밤에도 이동해야 맵을 빠르게 밝힙니다."}, {"season": "가을 (Autumn)", "days": "Day 6 ~ 10", "period": "정착기", "title": "베이스 캠프 명당 입주 & 1차 인프라 구축", "goal": "사통팔달 명당에 정착하여 연금술 엔진, 요리솥, 냉장고 설치", "todo": ["베이스 최적 명당 선정 (비팔로 초원 근처, 돼지마을/사막/웜홀 교차점, 오아시스 등)", "연금술 엔진(Alchemy Engine) 제작 및 설치", "요리솥(Crock Pot) 최소 2~4개 설치 (미트볼 및 피에로기 조리)", "시계태엽 몬스터(체스 나이트/비숍) 사냥 또는 무덤 파기로 '기어(Gears)' 1개 확보 -> '냉장고(Ice Box)' 제작"], "craft": ["연금술 엔진", "요리솥", "냉장고", "화덕", "보물상자"], "trap": "⚠️ 주의: 비팔로 무리 '한가운데'에 집을 짓지 마세요! 봄철 발정기 때 비팔로가 선공하여 베이스가 초토화됩니다. 초원 외곽에 지으세요."}, {"season": "가을 (Autumn)", "days": "Day 11 ~ 15", "period": "내정기", "title": "식량 인프라 이식 & 육포 건조대 대량 구축", "goal": "풀/잔가지/베리 덤불 이식 및 고기 보존을 위한 육포 건조대 완비", "todo": ["삽으로 풀 묘목 20~30개, 잔가지 20~30개, 베리 덤불 10~20개 파서 기지에 이식", "비팔로 똥이나 부패물로 이식한 풀과 베리에 거름(비료) 주기", "육포 건조대(Drying Rack) 6~8개 설치 (고기를 말려 정신력+체력 회복 갓템 '육포' 비축)", "거미줄 파밍 (새장 제작을 위한 거미줄 2개, 텐트 제작을 위한 거미줄 6개 확보)"], "craft": ["육포 건조대", "새장", "새 덫", "텐트"], "trap": "⚠️ 주의: 베이스 주변에 피뢰침이 없으면 번개 한 방에 이식한 풀밭과 상자가 전부 전소됩니다. 피뢰침을 반드시 먼저 설치하세요!"}, {"season": "가을 (Autumn)", "days": "Day 16 ~ 20", "period": "겨울 대비", "title": "방한 장비 & 피뢰침 & 얼음 투척기 준비", "goal": "겨울 동사를 방지할 보온 장비 완비 및 1차 하운드 습격 격퇴", "todo": ["보온돌(Thermal Stone) 전원 1개씩 제작 (화덕 옆에서 달궈 가방/인벤토리에 소지)", "밤에 잠든 비팔로 면도기로 털 깎기 + 비팔로 1~2마리 유인 사냥 -> '비팔로 뿔' 획득 -> '비팔로 모자' (방한력 +240 최고존엄) 제작", "피뢰침(Lightning Rod) 베이스 중앙에 설치", "얼음 투척기(Ice Flingomatic - 기어 2개 필요) 재료 사전 비축"], "craft": ["보온돌", "비팔로 모자 / 토끼 귀마개", "피뢰침", "면도기", "풋볼 헬멧"], "trap": "⚠️ 주의: 보온돌 하나만 믿고 모자 없이 겨울에 멀리 나가지 마세요. 비팔로 모자가 있어야 장시간 외출이 가능합니다."}, {"season": "겨울 (Winter)", "days": "Day 21 ~ 25", "period": "겨울 초반", "title": "빙하 채굴 & 맥터스크(바다코끼리) 캠프 사냥", "goal": "얼음 대량 비축 및 종결 유틸템(도보 지팡이, 태모섀터) 파밍", "todo": ["곡괭이로 미니 빙하를 채굴하여 '얼음' 40~80개 확보 -> 냉장고에 보관 (여름 대비 및 요리 만능 채우기)", "바다코끼리 캠프(맥터스크)를 찾아가 사냥 (2.5~3일 주기 리스폰):", "- 🦯 '바다코끼리 엄니' 획득 -> **도보 지팡이 (이동속도 +25% 영구 증가)** 즉시 제작!", "- 🎩 '태모섀터(Tam o' Shanter)' 모자 획득 -> 겨울 방한 + 분당 정신력 +6.7 폭풍 회복"], "craft": ["도보 지팡이", "바느질 도구", "겨울 모자"], "trap": "⚠️ 주의: 맥터스크 사냥 시 얼음 사냥개 2마리를 먼저 창으로 잡고, 도망가는 맥터스크를 구석으로 몰아 처치하세요."}, {"season": "겨울 (Winter)", "days": "Day 26 ~ 29", "period": "보스 결전 준비", "title": "겨울 거인 '디어클롭스(Deerclops)' 결전 준비", "goal": "기지 파괴 방지를 위한 격전지 세팅 및 전투 장비/음식 비축", "todo": ["기지에서 화면 1~2개 떨어진 외곽 공터에 '결전용 모닥불 2개(겹화덕)' 설치", "방어구: 풋볼 헬멧 3~4개 + 나무갑옷 3~4개 제작", "무기: 신선한 '햄 몽둥이(Ham Bat)' 제작 (공격력 59.5, 내구도 무제한)", "회복 음식: '피에로기(체력 +40)' 10~15개 또는 '육포' 10개 준비"], "craft": ["햄 몽둥이", "풋볼 헬멧", "나무갑옷", "피에로기"], "trap": "⚠️ 주의: 디어클롭스 울음소리가 들릴 때 기지 안에 머무르면 기지의 모든 건물과 냉장고를 부숴버립니다. 즉시 기지 밖으로 뛰어나가세요!"}, {"season": "겨울 (Winter)", "days": "Day 30 밤 ~ 31", "period": "보스 결전", "title": "디어클롭스 결전 & '눈알' 획득 (절대 먹지 말 것!)", "goal": "디어클롭스 처치 및 봄철 100% 방수 필수템 '눈알 우산' 재료 획득", "todo": ["Day 30 밤 거친 숨소리와 함께 디어클롭스 등장 -> 결전 모닥불로 유인", "모닥불 옆에 붙어 체온을 유지하며 맞딜(위그프리드/볼프강) 또는 2타 치고 빠지기 카이팅", "정신력이 바닥나 악몽 괴물이 나오기 전에 피에로기를 먹으며 속전속결 격파", "처치 후 드랍된 **'디어클롭스의 눈알(Deerclops Eyeball)'** 획득 -> **절대 먹지 말고 냉장고에 보관!**"], "craft": ["눈알 우산(Eyebrella) 준비"], "trap": "🚨 절대 금지: 디어클롭스 눈알을 실수로 먹거나 구워 먹지 마세요! 봄철 생존을 책임지는 '눈알 우산'의 유일무이한 재료입니다."}, {"season": "봄 (Spring)", "days": "Day 36 ~ 40", "period": "봄 초반", "title": "100% 완전 방수 세팅 & 습도 관리", "goal": "끝없는 폭우와 번개로부터 체온과 정신력을 지키는 방수 인프라 완비", "todo": ["디어클롭스 눈알 + 잔가지 15개 + 뼈조각 4개 -> **'눈알 우산(Eyebrella)'** 제작 (방수 100%, 번개 완전 차단, 여름 차양)", "눈알 우산이 없는 팀원은 '우비(Raincoat)' 또는 '우산 + 풋볼 헬멧' (합산 100% 방수) 착용", "젖은 아이템으로 인한 정신력 하락 방지 및 토끼 굴 침수로 인한 덫 회수"], "craft": ["눈알 우산", "우비", "우산"], "trap": "⚠️ 주의: 방수 장비 없이 비를 맞으면 젖음 수치가 올라가 도구가 손에서 미끄러지고 체온이 영하로 떨어지며 정신력이 바닥납니다."}, {"season": "봄 (Spring)", "days": "Day 41 ~ 48", "period": "봄 중반", "title": "개구리 비 대처 & 무스/구스(봄 거인) 사냥", "goal": "자연재해를 기회로 바꾸어 대량의 식량과 깃털 파밍", "todo": ["하늘에서 개구리가 수백 마리 떨어지는 '개구리 비' 발생 시:", "- 기지에서 벗어나 비팔로 무리나 무스구스 둥지로 달리기 -> 개구리와 싸움 붙여 개구리 다리 수백 개 수확", "무스구스(Moose/Goose) 및 새끼 모슬링 사냥:", "- 3대 치고 피하기 카이팅으로 처치 -> '솜털 깃털' 획득 (여름 폭염 방지 '깃털 부채' 제작 재료)"], "craft": ["고급 깃털 부채 (Luxury Fan)"], "trap": "⚠️ 주의: 개구리 비가 올 때 칼을 들고 개구리와 직접 맞서 싸우지 마세요. 10마리 이상에게 둘러싸이면 1초 만에 즉사합니다."}, {"season": "봄 (Spring)", "days": "Day 49 ~ 55", "period": "여름 대비", "title": "흡열 화덕 설치 & 얼음 투척기 가동 준비", "goal": "여름 폭염과 자연발화 화재를 방어할 쿨링 시스템 구축", "todo": ["베이스 중심에 '흡열 화덕(Endothermic Fire Pit - 초석 필요)' 설치", "얼음 투척기(Ice Flingomatic) 2~4대 설치 완료 및 통나무/연료 가득 채우기", "질산(초석) 및 얼음 추가 채굴 비축", "사막 오아시스 호수 낚시를 통해 '물안경 청사진' 획득 준비 (사막 모래폭풍 방지)"], "craft": ["흡열 화덕", "얼음 투척기", "보온돌 (냉장고 보관용 1개 추가)"], "trap": "⚠️ 주의: 얼음 투척기가 꺼져있으면 여름철 자연발화로 기지가 순식간에 잿더미가 됩니다. 여름 시작 전 반드시 On으로 켜두세요."}, {"season": "여름 (Summer)", "days": "Day 56 ~ 65", "period": "여름 폭염", "title": "폭염 생존 & 자연발화 진화 or 동굴 피서", "goal": "체온 상승과 자연발화 화재 방어 (지상 기지 or 지하 동굴 캠핑)", "todo": ["전략 A (지상 거주): 얼음 투척기 가동 + 냉장고에 차가운 보온돌 2개를 번갈아 교체하며 체온 유지 + 눈알 우산 착용", "전략 B (지하 동굴 피서 - 추천): 지하는 자연발화가 없으므로 여름 15일 동안 지하 동굴로 내려가 유적 탐사 및 파밍 진행", "폭염으로 체온이 70도 이상 오르면 흡열 화덕에 얼음/초석을 넣어 체온 급속 냉각"], "craft": ["흡열 모닥불", "물안경", "사막 고글"], "trap": "⚠️ 주의: 흡열 화덕 근처에 얼음 투척기가 있으면 화덕 불을 눈덩이로 꺼버립니다. 화덕은 투척기 범위 밖의 사각지대에 설치해야 합니다!"}, {"season": "여름 (Summer)", "days": "Day 66 ~ 70", "period": "여름 종반", "title": "개미사자(Antlion) 공물 바치기 & 가을 2년차 준비", "goal": "지진과 싱크홀을 방지하고 첫 1년을 완벽히 완주", "todo": ["오아시스 사막의 '개미사자'에게 돌, 장난감, 알 등을 정기적으로 공물 바치기 (지진 싱크홀 방지)", "자신이 있다면 차가운 보온돌을 들고 개미사자를 공격하여 처치 -> '게으른 탈출자', '모래 둔덕' 청사진 획득", "1년차 사계절 생존 성공! 축하합니다. 이제 2년차에는 지하 유적(고대 툴레사이트 장비) 및 달섬/천체 보스에 도전하세요!"], "craft": ["천체 오브", "툴레사이트 장비"], "trap": "⚠️ 주의: 개미사자 공물을 무시하면 베이스 바닥에 거대한 싱크홀 구덩이가 뚫려 건물이 파괴됩니다."}];
+    const baseZones = [{"id": "zone1", "name": "1구역: 주방 & 식품 저장소 (좌상단)", "color": "#4caf50", "icon": "cookpot", "pos": "top-left", "title": "최적의 동선 요리 센터", "desc": "한자리에 서서 모든 요리솥과 냉장고를 열 수 있는 4솥 1~2냉장고 황금 사각 배치를 구축합니다.", "structures": [{"name": "요리솥 (Crock Pot)", "count": "4 ~ 8개", "role": "미트볼, 피에로기 등 대량 요리"}, {"name": "냉장고 (Ice Box)", "count": "2 ~ 4개", "role": "식재료 및 보온돌 보관 (상호작용 중앙 밀착)"}, {"name": "새장 (Birdcage)", "count": "1개", "role": "괴물고기를 구워 먹여 신선한 계란으로 치환"}, {"name": "소금 단지 (Salt Box)", "count": "1개", "role": "생고기 보존 기간 2배 연장"}], "tip": "💡 꿀팁: 웬디나 위그프리드가 괴물고기를 가져오면, 불에 구워 새에게 먹이세요. 100% 신선한 계란으로 바뀌어 최고의 체력 회복식 '피에로기'와 '베이컨 앤 에그'를 무한 생산할 수 있습니다."}, {"id": "zone2", "name": "2구역: 영농 & 온실 단지 (우상단)", "color": "#8bc34a", "icon": "farm_plow_item", "pos": "top-right", "title": "거대 작물 스마트 팜", "desc": "Snapping tills 모드의 3x3 (9칸) 타일을 4개 배치하여 총 36개의 작물을 과학적으로 재배하는 영농 구역입니다.", "structures": [{"name": "경작지 타일 (Farm Soil)", "count": "4 타일 (36칸)", "role": "용과, 마늘, 고추, 감자, 토마토 재배"}, {"name": "퇴비통 (Composting Bin)", "count": "1 ~ 2개", "role": "퇴비 비료 생산"}, {"name": "물뿌리개 보관함", "count": "1 ~ 2개", "role": "작물 수분 공급"}, {"name": "씨앗 보관 상자", "count": "2개", "role": "특수 씨앗 및 비료 전용"}], "tip": "💡 꿀팁: 웜우드나 위커바텀이 있다면 이 구역에서 1분 만에 식량 창고 3개를 가득 채울 수 있습니다. 작물끼리 가족 보너스(동종 4개 이상)를 맞춰 심으면 거대 작물이 열립니다."}, {"id": "zone3", "name": "3구역: 연구 & 공방 & 창고 단지 (좌하단)", "color": "#2196f3", "icon": "researchlab2", "pos": "bottom-left", "title": "첨단 과학 기술 & 물류 허브", "desc": "연금술 엔진과 마법 장치를 모으고, 스마트 미니표지판으로 자원별 분류가 완료된 대형 보물상자 단지를 운영합니다.", "structures": [{"name": "연금술 엔진 (Alchemy Engine)", "count": "1개", "role": "2단계 과학 기술 해금"}, {"name": "그림자 조작기 / 모자 장치", "count": "각 1개", "role": "마법 탭 및 악몽 장비 해금"}, {"name": "분류 보물상자 단지", "count": "12 ~ 16개", "role": "Smart Minisign 모드로 광물/목재/전리품 자동 각인"}, {"name": "지도 제작대 & 도예가 바퀴", "count": "각 1개", "role": "맵 동기화 및 조각상 제작"}], "tip": "💡 꿀팁: 상자 앞마다 'Smart Minisign'을 달아두면 아이템을 넣는 순간 표지판에 그림이 그려집니다. 나무/돌/풀/보석/전투장비 전용 상자를 분리하세요."}, {"id": "zone4", "name": "4구역: 자원 농장 & 육포 건조장 (우하단)", "color": "#ff9800", "icon": "meatrack", "pos": "bottom-right", "title": "화재 안전 자원 생산 & 육포 라인", "desc": "얼음 투척기 소화 범위 안에 안전하게 풀/잔가지/베리를 이식하고 대규모 육포 건조대를 가동합니다.", "structures": [{"name": "육포 건조대 (Drying Rack)", "count": "12 ~ 16개", "role": "대형 고기를 말려 육포(정신력+15, 체력+20) 생산"}, {"name": "이식된 풀 & 잔가지 밭", "count": "각 20 ~ 30포기", "role": "기지 내 기초 자원 자급자족"}, {"name": "베리 덤불", "count": "10 ~ 15개", "role": "비상 식량 및 미트볼 채우기 재료"}], "tip": "💡 꿀팁: 이 구역의 모든 식물은 여름철 자연발화 1순위 대상입니다. 우하단 얼음 투척기의 유효 반경 안에 반드시 100% 포함되도록 배치하세요!"}, {"id": "center", "name": "중앙 허브: 광장 & 안전 화덕 구역 (중앙)", "color": "#e91e63", "icon": "firepit", "pos": "center", "title": "모든 투척기의 사각지대 (안전 쉼터)", "desc": "4개의 얼음 투척기가 닿지 않는 정중앙 사각지대에 일반 화덕과 흡열 화덕을 설치하여 불이 꺼지지 않도록 안전하게 설계합니다.", "structures": [{"name": "일반 화덕 (Fire Pit)", "count": "1개", "role": "겨울철 야간 조명 및 난방 (투척기 사각지대)"}, {"name": "흡열 화덕 (Endothermic Fire Pit)", "count": "1개", "role": "여름철 냉방 (투척기 사각지대)"}, {"name": "피뢰침 (Lightning Rod)", "count": "1개", "role": "베이스 전체 반경(약 2화면) 낙뢰 화재 완전 방지"}, {"name": "텐트 & 낮잠 천막", "count": "각 1개", "role": "야간/낮 수면으로 체력과 정신력 급속 회복"}], "tip": "🚨 치명적 주의: 화덕을 투척기 범위 안에 지으면 여름에 불을 피우자마자 투척기가 눈덩이를 던져 불을 꺼버립니다! 4개 투척기의 중심 교차점 사각지대에 정확히 화덕을 지어야 합니다."}];
+    const recipes = [{"name_ko": "미트볼", "name_en": "Meatballs", "icon": "meatballs", "stats": {"hunger": 62.5, "hp": 3, "sanity": 5, "spoil": "10일"}, "recipe": "고기값 0.5 이상 (고기/괴물고기/작은고기/개구리다리 1개) + 채우기 3개 (베리, 얼음, 버섯 등 / 나뭇가지 불가)", "desc": "돈스타브 최고의 가성비 국민 허기 음식. 괴물고기 1개 + 얼음 3개로도 완벽하게 만들어집니다."}, {"name_ko": "피에로기", "name_en": "Pierogi", "icon": "perogies", "stats": {"hunger": 37.5, "hp": 40, "sanity": 5, "spoil": "20일"}, "recipe": "고기 1개 + 달걀 1개 + 채소 1개 (당근/선인장/버섯) + 채우기 1개 (얼음/베리/나뭇가지 불가)", "desc": "보스전 필수 체력 회복 갓음식. 유통기한이 20일로 매우 길어 원정 갈 때 대량 비축 1순위입니다."}, {"name_ko": "용과 파이", "name_en": "Dragonpie", "icon": "dragonpie", "stats": {"hunger": 75, "hp": 40, "sanity": 5, "spoil": "15일"}, "recipe": "용과 1개 + 나뭇가지 3개", "desc": "농사로 용과를 수확하면 나뭇가지 3개만 넣고 조리하는 최상급 체력/허기 만능 파이입니다."}, {"name_ko": "베이컨 앤 에그", "name_en": "Bacon and Eggs", "icon": "bacon_and_eggs", "stats": {"hunger": 75, "hp": 20, "sanity": 5, "spoil": "20일"}, "recipe": "고기값 1.5 이상 (괴물고기 1개 + 큰고기 1개) + 달걀 2개", "desc": "장기 탐험과 동굴 원정에 최적화된 고포만감 보존식입니다."}, {"name_ko": "볼트 염소 젤리 (왈리 전용)", "name_en": "Volt Goat Chaud-Froid", "icon": "voltgoatjelly", "stats": {"hunger": 37.5, "hp": 3, "sanity": 10, "spoil": "10일"}, "recipe": "볼트 염소 뿔 1개 + 꿀 2개 + 채우기 1개", "desc": "섭취 시 5분 동안 모든 공격에 전기 속성 부여! 젖은 적에게 2.5배(250%) 폭딜을 꽂아넣는 결전 요리."}, {"name_ko": "서프 앤 터프", "name_en": "Surf 'n' Turf", "icon": "surfnturf", "stats": {"hunger": 37.5, "hp": 60, "sanity": 33, "spoil": "10일"}, "recipe": "고기값 2.5 + 생선값 1.5 (괴물고기 2개 + 물고기 2개 등)", "desc": "체력 +60과 정신력 +33을 동시에 채워주는 엔드게임 최고급 보양식입니다."}, {"name_ko": "태피", "name_en": "Taffy", "icon": "taffy", "stats": {"hunger": 25, "hp": -3, "sanity": 15, "spoil": "15일"}, "recipe": "꿀 3개 + 나뭇가지 1개", "desc": "벌통을 지어 꿀을 수확하면 정신력을 간편하게 회복할 수 있는 달콤한 사탕입니다."}, {"name_ko": "초록버섯 구이", "name_en": "Cooked Green Cap", "icon": "charcoal", "stats": {"hunger": 0, "hp": -1, "sanity": 15, "spoil": "10일"}, "recipe": "초록 버섯을 불에 구움 (저녁에 늪지/숲 채취)", "desc": "뉴비의 정신력 응급처치 1위. 구워 먹기만 하면 정신력 +15 즉시 회복!"}];
+
+    // Tab Navigation
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-tab-btn').forEach(el => el.classList.remove('active'));
+      
+      const target = document.getElementById('tab-' + tabId);
+      if (target) target.classList.add('active');
+
+      const activeBtn = Array.from(document.querySelectorAll('.nav-tab-btn')).find(btn => btn.getAttribute('onclick').includes(tabId));
+      if (activeBtn) activeBtn.classList.add('active');
+
+      if (tabId === 'base') {
+        setTimeout(() => {
+          initCanvas();
+        }, 50);
+      }
+    }
+
+    // Render Characters
+    function renderCharacters(list) {
+      const container = document.getElementById('characterCardsGrid');
+      container.innerHTML = list.map(c => `
+        <div class="char-card" data-role="${c.role}" data-tier="${c.tier}">
+          <div class="char-card-header">
+            <div class="char-avatar-box">
+              <img src="${c.icon}" alt="${c.name_ko}" onerror="this.src='https://www.dstcraft.com/images/category-icons/character.png'">
+            </div>
+            <div class="char-header-info">
+              <h3>${c.name_ko} <span style="font-size:12px; color:var(--text-muted);">(${c.name_en})</span></h3>
+              <div class="char-title">${c.title}</div>
+              <div style="font-size:11px; color:#ffd54f; margin-top:2px;">난이도: ${'★'.repeat(c.stars)}${'☆'.repeat(5 - c.stars)}</div>
+            </div>
+            <div class="tier-badge tier-${c.tier.replace('+', 'plus')}">${c.tier} TIER</div>
+          </div>
+
+          <div class="char-card-body">
+            <div class="stat-bars">
+              <div class="stat-item"><span class="stat-label">❤️ 체력</span><span class="stat-value stat-hp">${c.stats.hp}</span></div>
+              <div class="stat-item"><span class="stat-label">🍗 허기</span><span class="stat-value stat-hunger">${c.stats.hunger}</span></div>
+              <div class="stat-item"><span class="stat-label">🧠 정신력</span><span class="stat-value stat-sanity">${c.stats.sanity}</span></div>
+            </div>
+
+            <div class="char-diet">🍽️ <strong>식성:</strong> ${c.diet}</div>
+
+            <div>
+              <div class="char-section-title">✨ 핵심 장점</div>
+              <ul class="char-list">
+                ${c.strengths.map(s => `<li>${s}</li>`).join('')}
+              </ul>
+            </div>
+
+            <div>
+              <div class="char-section-title" style="color:var(--accent-red);">⚠️ 주의점 & 단점</div>
+              <ul class="char-list char-weakness">
+                ${c.weaknesses.map(w => `<li>${w}</li>`).join('')}
+              </ul>
+            </div>
+
+            <div style="font-size:12px; color:#90caf9; background:rgba(66,165,245,0.06); padding:8px 10px; border-radius:6px;">
+              ⚡ <strong>${c.skill_tree}</strong>
+            </div>
+
+            <div class="char-tip-box">
+              💡 <strong>뉴비 실전 팁:</strong> ${c.newbie_tip}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterCharacters(type, btn) {
+      document.querySelectorAll('#tab-characters .filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      if (type === 'all') {
+        renderCharacters(characters);
+      } else if (type === 'top') {
+        renderCharacters(characters.filter(c => c.tier === 'S+' || c.tier === 'S'));
+      } else {
+        renderCharacters(characters.filter(c => c.role === type));
+      }
+    }
+
+    function searchCharacters(query) {
+      const q = query.trim().toLowerCase();
+      if (!q) {
+        renderCharacters(characters);
+        return;
+      }
+      const filtered = characters.filter(c => 
+        c.name_ko.toLowerCase().includes(q) || 
+        c.name_en.toLowerCase().includes(q) ||
+        c.title.toLowerCase().includes(q) ||
+        c.strengths.some(s => s.toLowerCase().includes(q)) ||
+        c.newbie_tip.toLowerCase().includes(q)
+      );
+      renderCharacters(filtered);
+    }
+
+    // Render Synergies
+    function renderSynergies() {
+      const container = document.getElementById('synergyContainer');
+      container.innerHTML = synergies.map(s => {
+        const isCounter = s.tier === 'D' || s.tier === 'F';
+
+        return `
+          <div class="synergy-card" style="border-left: 6px solid ${isCounter ? 'var(--accent-red)' : 'var(--accent-gold)'};">
+            <div class="synergy-header">
+              <div class="synergy-title-wrap">
+                <div class="synergy-tier-tag tier-${s.tier}">${s.tier} TIER</div>
+                <div>
+                  <h3 style="font-size: 18px; color: #fff;">${s.name}</h3>
+                  <div style="font-size: 13px; color: var(--accent-gold); font-weight: 500;">${s.badge}</div>
+                </div>
+              </div>
+
+              <div class="synergy-avatars">
+                ${s.pair.map(id => {
+                  const ch = characters.find(c => c.id === id);
+                  return ch ? `
+                    <div class="synergy-avatar" title="${ch.name_ko}">
+                      <img src="${ch.icon}" alt="${ch.name_ko}">
+                    </div>
+                  ` : '';
+                }).join('')}
+              </div>
+            </div>
+
+            <p style="font-size: 13.5px; color: var(--text-main); line-height: 1.5;">${s.desc}</p>
+
+            <div class="synergy-points">
+              ${s.points.map(p => `
+                <div class="synergy-point-box" style="border-left-color: ${isCounter ? 'var(--accent-red)' : 'var(--accent-gold)'};">
+                  ${p}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Render Mods
+    function renderMods(list) {
+      const container = document.getElementById('modsGrid');
+      container.innerHTML = list.map(m => `
+        <div class="mod-card">
+          <div class="mod-header">
+            <div class="mod-title">
+              <h4>${m.name_ko}</h4>
+              <div class="mod-en">${m.name_en}</div>
+            </div>
+            <span class="mod-tag ${m.type.includes('Client') && !m.type.includes('Server') ? 'mod-tag-client' : m.type.includes('Server') && !m.type.includes('Client') ? 'mod-tag-server' : 'mod-tag-both'}">
+              ${m.type}
+            </span>
+          </div>
+
+          <p class="mod-desc">${m.desc}</p>
+
+          ${m.config_tip ? `
+            <div class="mod-tip">
+              💡 <strong>설정 팁:</strong> ${m.config_tip}
+            </div>
+          ` : ''}
+
+          ${m.hotkey ? `
+            <div class="mod-hotkey">
+              ⌨️ <strong>단축키:</strong> ${m.hotkey}
+            </div>
+          ` : ''}
+        </div>
+      `).join('');
+    }
+
+    function filterMods(cat, btn) {
+      document.querySelectorAll('#tab-mods .filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      if (cat === 'all') {
+        renderMods(mods);
+      } else {
+        renderMods(mods.filter(m => m.category === cat));
+      }
+    }
+
+    function searchMods(query) {
+      const q = query.trim().toLowerCase();
+      if (!q) {
+        renderMods(mods);
+        return;
+      }
+      const filtered = mods.filter(m => 
+        m.name_ko.toLowerCase().includes(q) ||
+        m.name_en.toLowerCase().includes(q) ||
+        m.desc.toLowerCase().includes(q) ||
+        (m.hotkey && m.hotkey.toLowerCase().includes(q))
+      );
+      renderMods(filtered);
+    }
+
+    // Render Roadmap
+    function renderRoadmap() {
+      const container = document.getElementById('roadmapTimeline');
+      const savedChecks = JSON.parse(localStorage.getItem('dst_roadmap_checks') || '{}');
+
+      container.innerHTML = roadmap.map((r, idx) => {
+        const seasonClass = r.season.includes('겨울') ? 'winter' : r.season.includes('봄') ? 'spring' : r.season.includes('여름') ? 'summer' : 'autumn';
+
+        return `
+          <div class="timeline-card ${seasonClass}">
+            <div class="timeline-header">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span class="days-badge">${r.days} (${r.season})</span>
+                <h3 style="font-size: 17px; color: #fff;">${r.title}</h3>
+              </div>
+              <span style="font-size:12px; color:var(--accent-gold); font-weight:600;">[${r.period}]</span>
+            </div>
+
+            <p style="font-size: 13.5px; color: #cfd8dc; margin-bottom: 10px;">🎯 <strong>구간 핵심 목표:</strong> ${r.goal}</p>
+
+            <div class="todo-list">
+              ${r.todo.map((item, itemIdx) => {
+                const checkKey = `step_${idx}_${itemIdx}`;
+                const isChecked = !!savedChecks[checkKey];
+                return `
+                  <label class="todo-item ${isChecked ? 'checked' : ''}">
+                    <input type="checkbox" data-key="${checkKey}" onchange="toggleTodo(this)" ${isChecked ? 'checked' : ''}>
+                    <span>${item}</span>
+                  </label>
+                `;
+              }).join('')}
+            </div>
+
+            <div class="craft-tags">
+              <span style="font-size:12px; color:var(--text-muted); align-self:center;">🔨 추천 제작:</span>
+              ${r.craft.map(c => `<span class="craft-tag">${c}</span>`).join('')}
+            </div>
+
+            <div class="trap-box">
+              ${r.trap}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      updateProgress();
+    }
+
+    function toggleTodo(input) {
+      const key = input.dataset.key;
+      const savedChecks = JSON.parse(localStorage.getItem('dst_roadmap_checks') || '{}');
+      savedChecks[key] = input.checked;
+      localStorage.setItem('dst_roadmap_checks', JSON.stringify(savedChecks));
+
+      if (input.checked) {
+        input.parentElement.classList.add('checked');
+      } else {
+        input.parentElement.classList.remove('checked');
+      }
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const checkboxes = document.querySelectorAll('#roadmapTimeline input[type="checkbox"]');
+      const total = checkboxes.length;
+      const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+      const pct = total > 0 ? Math.round((checked / total) * 100) : 0;
+      const progressEl = document.getElementById('roadmapProgress');
+      if (progressEl) {
+        progressEl.textContent = `로드맵 달성률: ${pct}% (${checked}/${total})`;
+      }
+    }
+
+    function resetChecklist() {
+      if (confirm('모든 로드맵 체크박스를 초기화하시겠습니까?')) {
+        localStorage.removeItem('dst_roadmap_checks');
+        renderRoadmap();
+      }
+    }
+
+    // Render Recipes
+    function renderRecipes() {
+      const container = document.getElementById('recipesGrid');
+      container.innerHTML = recipes.map(rc => `
+        <div class="recipe-card">
+          <div class="recipe-img-box">
+            <img src="images/items/${rc.icon}.png" alt="${rc.name_ko}" onerror="this.src='images/items/cookpot.png'">
+          </div>
+          <div class="recipe-info">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="recipe-title">${rc.name_ko}</span>
+              <span style="font-size:11px; color:var(--text-muted);">${rc.name_en} (유통: ${rc.stats.spoil})</span>
+            </div>
+            
+            <div class="recipe-formula">🧪 ${rc.recipe}</div>
+
+            <div class="stat-bars" style="margin: 6px 0; padding: 4px 8px;">
+              <div class="stat-item"><span class="stat-label">❤️ 체력</span><span class="stat-value stat-hp">${rc.stats.hp > 0 ? '+' + rc.stats.hp : rc.stats.hp}</span></div>
+              <div class="stat-item"><span class="stat-label">🍗 허기</span><span class="stat-value stat-hunger">+${rc.stats.hunger}</span></div>
+              <div class="stat-item"><span class="stat-label">🧠 정신력</span><span class="stat-value stat-sanity">${rc.stats.sanity > 0 ? '+' + rc.stats.sanity : rc.stats.sanity}</span></div>
+            </div>
+
+            <p style="font-size:12px; color:var(--text-muted);">${rc.desc}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ========================================================
+    // Base Planner & Grid Canvas Logic
+    // ========================================================
+    const structurePaletteData = [
+      { id: "firepit", name: "화덕", icon: "firepit", color: "#ff5722", cost: { "통나무": 2, "석재": 3, "돌": 12 } },
+      { id: "coldfirepit", name: "흡열 화덕", icon: "coldfirepit", color: "#00bcd4", cost: { "초석": 2, "석재": 4, "전기부품": 2 } },
+      { id: "cookpot", name: "요리솥", icon: "cookpot", color: "#8d6e63", cost: { "석재": 3, "목재": 6, "잔가지": 6 } },
+      { id: "icebox", name: "냉장고", icon: "icebox", color: "#03a9f4", cost: { "기어": 1, "금": 2, "석재": 1 } },
+      { id: "firesuppressor", name: "얼음 투척기", icon: "firesuppressor", color: "#29b6f6", cost: { "기어": 2, "전기부품": 2, "얼음": 15 } },
+      { id: "researchlab2", name: "연금술 엔진", icon: "researchlab2", color: "#ffb300", cost: { "판자": 4, "석재": 2, "금": 6 } },
+      { id: "treasurechest", name: "보물 상자", icon: "treasurechest", color: "#a1887f", cost: { "판자": 3 } },
+      { id: "meatrack", name: "육포 건조대", icon: "meatrack", color: "#ff7043", cost: { "잔가지": 3, "목재": 2, "로프": 3 } },
+      { id: "tent", name: "텐트", icon: "tent", color: "#4caf50", cost: { "거미줄": 6, "잔가지": 6, "로프": 3 } },
+      { id: "birdcage", name: "새장", icon: "birdcage", color: "#ffd54f", cost: { "파피루스": 2, "금": 6, "씨앗": 2 } },
+      { id: "lightning_rod", name: "피뢰침", icon: "lightning_rod", color: "#e040fb", cost: { "금": 3, "석재": 1 } },
+      { id: "farm_plow_item", name: "경작지(밭)", icon: "farm_plow_item", color: "#7cb342", cost: { "판자": 3, "로프": 2, "부싯돌": 2 } }
+    ];
+
+    let plannerMode = 'tour'; // 'tour' or 'build'
+    let selectedPaletteItem = null;
+    let showFlingoRadius = false;
+    let placedStructures = [];
+
+    // Flingo Hub Centers on Canvas (900 x 506 coords)
+    const flingoHubs = [
+      { x: 255, y: 145, name: "좌상단 투척기" },
+      { x: 645, y: 145, name: "우상단 투척기" },
+      { x: 210, y: 365, name: "좌하단 투척기" },
+      { x: 690, y: 365, name: "우하단 투척기" }
+    ];
+    const FLINGO_RADIUS = 155; // visual coverage radius
+
+    function initCanvas() {
+      renderPalette();
+      selectZone('zone1');
+      
+      const saved = localStorage.getItem('dst_placed_structures');
+      if (saved) {
+        placedStructures = JSON.parse(saved);
+      } else {
+        loadRecommendedPreset(false);
+      }
+
+      setupCanvasEvents();
+      redrawCanvas();
+      calculateMaterials();
+    }
+
+    function renderPalette() {
+      const container = document.getElementById('structurePalette');
+      container.innerHTML = structurePaletteData.map(p => `
+        <div class="palette-item ${selectedPaletteItem === p.id ? 'selected' : ''}" onclick="selectPaletteItem('${p.id}')">
+          <img src="images/items/${p.icon}.png" alt="${p.name}" onerror="this.src='images/items/cookpot.png'">
+          <span>${p.name}</span>
+        </div>
+      `).join('');
+    }
+
+    function selectPaletteItem(id) {
+      selectedPaletteItem = id;
+      renderPalette();
+      setPlannerMode('build');
+    }
+
+    function setPlannerMode(mode) {
+      plannerMode = mode;
+      const overlays = document.getElementById('quadrantOverlays');
+      const btnTour = document.getElementById('btnTourMode');
+      const btnBuild = document.getElementById('btnBuildMode');
+
+      if (mode === 'tour') {
+        overlays.style.display = 'grid';
+        btnTour.classList.add('btn-gold');
+        btnBuild.classList.remove('btn-gold');
+      } else {
+        overlays.style.display = 'none';
+        btnTour.classList.remove('btn-gold');
+        btnBuild.classList.add('btn-gold');
+      }
+      redrawCanvas();
+    }
+
+    function toggleFlingoRadius() {
+      showFlingoRadius = !showFlingoRadius;
+      const btn = document.getElementById('toggleFlingoBtn');
+      if (showFlingoRadius) {
+        btn.classList.add('btn-gold');
+        btn.textContent = '❄️ 투척기 반경 끄기';
+      } else {
+        btn.classList.remove('btn-gold');
+        btn.textContent = '❄️ 투척기 반경 켜기';
+      }
+      redrawCanvas();
+    }
+
+    function selectZone(zoneId) {
+      const zone = baseZones.find(z => z.id === zoneId);
+      if (!zone) return;
+
+      const panel = document.getElementById('zoneDetailPanel');
+      panel.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <h3 style="font-size:17px; color:${zone.color};">${zone.name}</h3>
+          <span style="font-size:12px; color:var(--text-muted);">${zone.title}</span>
+        </div>
+        <p style="font-size:13px; color:var(--text-main); margin-bottom:12px;">${zone.desc}</p>
+
+        <h4 style="font-size:13px; color:var(--accent-gold); margin-bottom:6px;">📌 권장 배치 구조물:</h4>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:8px; margin-bottom:12px;">
+          ${zone.structures.map(s => `
+            <div style="background:#0f1118; padding:6px 10px; border-radius:6px; font-size:12px; border-left:3px solid ${zone.color};">
+              <strong>${s.name}</strong> (${s.count})<br>
+              <span style="font-size:11px; color:var(--text-muted);">${s.role}</span>
+            </div>
+          `).join('')}
+        </div>
+
+        <div style="background:rgba(200,155,60,0.08); border:1px dashed var(--border-gold); padding:8px 12px; border-radius:6px; font-size:12px; color:#ffe082;">
+          ${zone.tip}
+        </div>
+      `;
+    }
+
+    function setupCanvasEvents() {
+      const canvas = document.getElementById('baseInteractiveCanvas');
+      canvas.onclick = function(e) {
+        if (plannerMode !== 'build') return;
+        if (!selectedPaletteItem) {
+          alert('오른쪽 팔레트에서 배치할 구조물을 먼저 선택하세요!');
+          return;
+        }
+
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+
+        const clickX = (e.clientX - rect.left) * scaleX;
+        const clickY = (e.clientY - rect.top) * scaleY;
+
+        // Snap to nearest 15px grid
+        const snapX = Math.round(clickX / 15) * 15;
+        const snapY = Math.round(clickY / 15) * 15;
+
+        placedStructures.push({
+          id: selectedPaletteItem,
+          x: snapX,
+          y: snapY
+        });
+
+        localStorage.setItem('dst_placed_structures', JSON.stringify(placedStructures));
+        redrawCanvas();
+        calculateMaterials();
+      };
+
+      // Right click to remove structure
+      canvas.oncontextmenu = function(e) {
+        e.preventDefault();
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        const clickX = (e.clientX - rect.left) * scaleX;
+        const clickY = (e.clientY - rect.top) * scaleY;
+
+        // Find closest within 25px
+        const idx = placedStructures.findIndex(s => Math.hypot(s.x - clickX, s.y - clickY) < 25);
+        if (idx !== -1) {
+          placedStructures.splice(idx, 1);
+          localStorage.setItem('dst_placed_structures', JSON.stringify(placedStructures));
+          redrawCanvas();
+          calculateMaterials();
+        }
+      };
+    }
+
+    function redrawCanvas() {
+      const canvas = document.getElementById('baseInteractiveCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw Flingo Radius Circles
+      if (showFlingoRadius) {
+        flingoHubs.forEach(hub => {
+          ctx.beginPath();
+          ctx.arc(hub.x, hub.y, FLINGO_RADIUS, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(41, 182, 246, 0.18)";
+          ctx.fill();
+          ctx.lineWidth = 2;
+          ctx.strokeStyle = "rgba(41, 182, 246, 0.7)";
+          ctx.setLineDash([6, 6]);
+          ctx.stroke();
+          ctx.setLineDash([]);
+
+          // Center text
+          ctx.fillStyle = "#29b6f6";
+          ctx.font = "bold 12px Noto Sans KR";
+          ctx.fillText("❄️ 투척기 소화 범위", hub.x - 50, hub.y - FLINGO_RADIUS + 20);
+        });
+
+        // Central Safe Zone Indicator
+        ctx.beginPath();
+        ctx.arc(450, 253, 60, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(239, 83, 80, 0.15)";
+        ctx.fill();
+        ctx.strokeStyle = "rgba(239, 83, 80, 0.8)";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.fillStyle = "#ef5350";
+        ctx.font = "bold 11px Noto Sans KR";
+        ctx.fillText("🔥 안전 화덕 구역", 405, 257);
+      }
+
+      // Draw Placed Structures
+      placedStructures.forEach(item => {
+        const meta = structurePaletteData.find(p => p.id === item.id);
+        if (!meta) return;
+
+        // Draw Icon Circle
+        ctx.beginPath();
+        ctx.arc(item.x, item.y, 16, 0, Math.PI * 2);
+        ctx.fillStyle = meta.color || "#c89b3c";
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#ffffff";
+        ctx.stroke();
+
+        // Label
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 10px Noto Sans KR";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(meta.name.substring(0, 2), item.x, item.y);
+      });
+    }
+
+    function calculateMaterials() {
+      const totals = {};
+      placedStructures.forEach(item => {
+        const meta = structurePaletteData.find(p => p.id === item.id);
+        if (meta && meta.cost) {
+          for (const [res, count] of Object.entries(meta.cost)) {
+            totals[res] = (totals[res] || 0) + count;
+          }
+        }
+      });
+
+      const listContainer = document.getElementById('resourceCalcList');
+      if (!listContainer) return;
+      if (Object.keys(totals).length === 0) {
+        listContainer.innerHTML = '<div style="grid-column:span 2; font-size:12px; color:var(--text-muted); text-align:center;">배치된 구조물이 없습니다.</div>';
+        return;
+      }
+
+      listContainer.innerHTML = Object.entries(totals).map(([k, v]) => `
+        <div class="res-item">
+          <span style="color:var(--text-main);">${k}</span>
+          <strong style="color:var(--accent-gold); font-size:13px;">x${v}</strong>
+        </div>
+      `).join('');
+    }
+
+    function loadRecommendedPreset(confirmPrompt = true) {
+      if (confirmPrompt && placedStructures.length > 0) {
+        if (!confirm('현재 배치를 덮어쓰고 4-투척기 황금 추천 배치를 불러오시겠습니까?')) return;
+      }
+
+      placedStructures = [
+        // Center: Firepit & Endothermic
+        { id: "firepit", x: 440, y: 240 },
+        { id: "coldfirepit", x: 460, y: 265 },
+        { id: "lightning_rod", x: 450, y: 210 },
+        { id: "tent", x: 410, y: 260 },
+
+        // 4 Flingomatics
+        { id: "firesuppressor", x: 255, y: 145 },
+        { id: "firesuppressor", x: 645, y: 145 },
+        { id: "firesuppressor", x: 210, y: 365 },
+        { id: "firesuppressor", x: 690, y: 365 },
+
+        // Zone 1: Kitchen (Top-left)
+        { id: "cookpot", x: 230, y: 110 },
+        { id: "cookpot", x: 260, y: 110 },
+        { id: "cookpot", x: 230, y: 180 },
+        { id: "cookpot", x: 260, y: 180 },
+        { id: "icebox", x: 245, y: 145 },
+        { id: "birdcage", x: 200, y: 145 },
+
+        // Zone 2: Farm (Top-right)
+        { id: "farm_plow_item", x: 610, y: 110 },
+        { id: "farm_plow_item", x: 680, y: 110 },
+        { id: "farm_plow_item", x: 610, y: 180 },
+        { id: "farm_plow_item", x: 680, y: 180 },
+
+        // Zone 3: Storage & Science (Bottom-left)
+        { id: "researchlab2", x: 210, y: 330 },
+        { id: "treasurechest", x: 170, y: 340 },
+        { id: "treasurechest", x: 170, y: 370 },
+        { id: "treasurechest", x: 170, y: 400 },
+        { id: "treasurechest", x: 250, y: 340 },
+        { id: "treasurechest", x: 250, y: 370 },
+        { id: "treasurechest", x: 250, y: 400 },
+
+        // Zone 4: Drying racks & Resources (Bottom-right)
+        { id: "meatrack", x: 650, y: 330 },
+        { id: "meatrack", x: 680, y: 330 },
+        { id: "meatrack", x: 710, y: 330 },
+        { id: "meatrack", x: 650, y: 400 },
+        { id: "meatrack", x: 680, y: 400 },
+        { id: "meatrack", x: 710, y: 400 }
+      ];
+
+      localStorage.setItem('dst_placed_structures', JSON.stringify(placedStructures));
+      redrawCanvas();
+      calculateMaterials();
+    }
+
+    function clearCanvas() {
+      if (confirm('캔버스에 배치된 모든 구조물을 지우시겠습니까?')) {
+        placedStructures = [];
+        localStorage.removeItem('dst_placed_structures');
+        redrawCanvas();
+        calculateMaterials();
+      }
+    }
+
+    function exportCanvasImage() {
+      const canvas = document.getElementById('baseInteractiveCanvas');
+      const bgImg = document.querySelector('.base-bg-img');
+
+      // Create composite canvas
+      const compCanvas = document.createElement('canvas');
+      compCanvas.width = canvas.width;
+      compCanvas.height = canvas.height;
+      const compCtx = compCanvas.getContext('2d');
+
+      compCtx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+      compCtx.drawImage(canvas, 0, 0);
+
+      const link = document.createElement('a');
+      link.download = 'dst_base_layout.png';
+      link.href = compCanvas.toDataURL('image/png');
+      link.click();
+    }
+
+    // Global Initialization
+    window.addEventListener('DOMContentLoaded', () => {
+      renderCharacters(characters);
+      renderSynergies();
+      renderMods(mods);
+      renderRoadmap();
+      renderRecipes();
+      initCanvas();
+    });
+  </script>
+</body>
+</html>
